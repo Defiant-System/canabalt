@@ -1,0 +1,12 @@
+<MenuBar>
+	<Menu name="Canabalt">
+		<Menu name="About Canabalt" shell="win -a"/>
+		<Menu type="divider"/>
+		<Menu name="Quit Canabalt" shell="win -c"/>
+	</Menu>
+	<Menu name="Help">
+		<Menu name="Help" click="open-help"/>
+		<Menu type="divider"/>
+		<Menu name="License"/>
+	</Menu>
+</MenuBar>
