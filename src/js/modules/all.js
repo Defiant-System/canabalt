@@ -196,11 +196,11 @@ GraphicObjectPool.prototype.addGraphics = function(n, t, i, r) {
 };
 GraphicObjectPool.prototype.createHallGraphic = function() {
 	var n = new PIXI.Graphics;
-	return n.lineStyle(WallSlice.WIDTH, 4281677117, 1), n.moveTo(0, 0), n.lineTo(0, WallSlice.HEIGHT + 1), n
+	return n.lineStyle(WallSlice.WIDTH, 0x35353d, 1), n.moveTo(0, 0), n.lineTo(0, WallSlice.HEIGHT + 1), n
 };
 GraphicObjectPool.prototype.createGlassWindowGraphic = function() {
 	var n = new PIXI.Graphics;
-	return n.lineStyle(GlassWindow.WIDTH, 16777215, 1), n.moveTo(0, 0), n.lineTo(0, WallSlice.HEIGHT), n
+	return n.lineStyle(GlassWindow.WIDTH, 0xffffff, 1), n.moveTo(0, 0), n.lineTo(0, WallSlice.HEIGHT), n
 };
 
 
@@ -681,12 +681,10 @@ function GameOver(n, t, i, r) {
 	PIXI.DisplayObjectContainer.call(this),
 	e = 20,
 	u = new PIXI.Graphics,
-	// u.beginFill(4281677117),
-	// u.drawRect(0, e + 35, n, 64),
-	// u.beginFill(268435455),
-	// u.drawRect(0, e + 35 + 64, n, 2),
-	// u.beginFill(4281677117),
-	// u.drawRect(0, t - 30, n, 30),
+	u.beginFill(0x35363c),
+	u.drawRect(0, e + 54, n, 54),
+	u.beginFill(0x35363c),
+	u.drawRect(0, t - 35, n, 30),
 	this.addChild(u),
 	o = new PIXI.Sprite.fromFrame("raw/gameover.png"),
 	o.x = Math.floor((n - 390) / 2),
@@ -697,11 +695,12 @@ function GameOver(n, t, i, r) {
 		font: "16px Flixel",
 		fill: "#ffffff",
 		align: "center",
-		wordWrap: !0,
+		wordWrap: true,
 		wordWrapWidth: n
 	}),
-	f.x = Math.floor((n - 330) / 2),
-	f.y = e + 50,
+	// f.x = Math.floor((n - 330) / 2),
+	f.x = 65,
+	f.y = e + 60,
 	f.width = n,
 	f.scale.x = 1,
 	f.scale.y = 1,
@@ -1536,7 +1535,11 @@ ScrollAnimation.prototype.addAnimation = function(n, t, i, r) {
 },
 ScrollAnimation.prototype.play = function(n) {
 	var t = this.frames[n];
-	this.clip = this.clip || new PIXI.MovieClip(t.textures), this.clip.textures = t.textures, this.clip.loop = t.loop, this.clip.animationSpeed = t.speed, this.clip.gotoAndPlay(0)
+	this.clip = this.clip || new PIXI.MovieClip(t.textures),
+	this.clip.textures = t.textures,
+	this.clip.loop = t.loop,
+	this.clip.animationSpeed = t.speed,
+	this.clip.gotoAndPlay(0)
 },
 ScrollAnimation.prototype.finished = function() {
 	return !this.clip.playing
@@ -1762,7 +1765,7 @@ function Main() {
 	let dim = { ...GAME },
 		canvas = window.find("canvas").attr(dim);
 
-	this.stage = new PIXI.Stage(4289769663);
+	this.stage = new PIXI.Stage(0xb0b0bf);
 	this.renderer = PIXI.autoDetectRenderer(GAME.width, GAME.height, canvas[0]);
 	this.width = dim.width;
 	this.height = dim.height;
