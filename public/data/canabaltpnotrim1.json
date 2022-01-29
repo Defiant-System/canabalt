@@ -5664,7 +5664,7 @@
 	"meta": {
 		"app": "http://www.codeandweb.com/texturepacker ",
 		"version": "1.0",
-		"image": "canabaltpnotrim1.png",
+		"image": "../img/canabaltpnotrim1.png",
 		"format": "RGBA8888",
 		"size": {
 			"w": 2048,

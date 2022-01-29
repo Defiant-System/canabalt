@@ -1,6 +1,6 @@
 {
 	"urls": [
-		"data/sprites/audiohowler.mp3"
+		"~/audio/audiohowler.mp3"
 	],
 	"sprite": {
 		"bomb_explode": [

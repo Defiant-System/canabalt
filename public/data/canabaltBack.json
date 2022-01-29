@@ -24,7 +24,7 @@
     "meta": {
         "app": "http://www.codeandweb.com/texturepacker ",
         "version": "1.0",
-        "image": "canabaltBack.png",
+        "image": "../img/canabaltBack.png",
         "format": "RGBA8888",
         "size": {
             "w": 1024,
