@@ -625,10 +625,24 @@ function ScrollBackground(n, t, i, r) {
 }
 
 function PlayerAsset() {
-	this.buildFrames(), ScrollMovie.call(this, this.run1Frames), this.buildSounds(), this.bindKeyHandlers(), this.animationSpeed = .5, this.gotoAndPlay(0), this.onFloor = !1, this.stumble = !1, this.jump = 0, this.craneFeet = !1, this.fc = 0, this.maxVelocity = {
+	this.buildFrames(),
+	ScrollMovie.call(this, this.run1Frames),
+	this.buildSounds(),
+	this.bindKeyHandlers(),
+	this.animationSpeed = .5,
+	this.gotoAndPlay(0),
+	this.onFloor = !1,
+	this.stumble = !1,
+	this.jump = 0,
+	this.craneFeet = !1,
+	this.fc = 0,
+	this.maxVelocity = {
 		x: 1e3,
 		y: 360
-	}, this.jumpLimit = 0, this.my = 0, this.objectPhysics = new ObjectPhysics({
+	},
+	this.jumpLimit = 0,
+	this.my = 0,
+	this.objectPhysics = new ObjectPhysics({
 		position: {
 			x: WallSlice.WIDTH * 10,
 			y: 0
@@ -645,7 +659,8 @@ function PlayerAsset() {
 			x: 125,
 			y: 0
 		}
-	}), this.epitaph = "fall"
+	}),
+	this.epitaph = "fall"
 }
 
 function HUD(n, t, i) {
@@ -666,12 +681,12 @@ function GameOver(n, t, i, r) {
 	PIXI.DisplayObjectContainer.call(this),
 	e = 20,
 	u = new PIXI.Graphics,
-	u.beginFill(4281677117),
-	u.drawRect(0, e + 35, n, 64),
-	u.beginFill(268435455),
-	u.drawRect(0, e + 35 + 64, n, 2),
-	u.beginFill(4281677117),
-	u.drawRect(0, t - 30, n, 30),
+	// u.beginFill(4281677117),
+	// u.drawRect(0, e + 35, n, 64),
+	// u.beginFill(268435455),
+	// u.drawRect(0, e + 35 + 64, n, 2),
+	// u.beginFill(4281677117),
+	// u.drawRect(0, t - 30, n, 30),
 	this.addChild(u),
 	o = new PIXI.Sprite.fromFrame("raw/gameover.png"),
 	o.x = Math.floor((n - 390) / 2),
@@ -790,13 +805,20 @@ let GameGlobal = function() {
 }();
 
 WallSlice.prototype.initDisplay = function(n, t, i) {
-	this.sprite = GameGlobal.PoolKeeper.borrowWallSprite(this.type), this.sprite.scale.x = this.scale.x, this.sprite.scale.y = this.scale.y, this.sprite.anchor = this.anchor, this.sprite.position.x = n + t * WallSlice.WIDTH + this.offsetX, this.sprite.position.y = this.y + i
+	this.sprite = GameGlobal.PoolKeeper.borrowWallSprite(this.type),
+	this.sprite.scale.x = this.scale.x,
+	this.sprite.scale.y = this.scale.y,
+	this.sprite.anchor = this.anchor,
+	this.sprite.position.x = n + t * WallSlice.WIDTH + this.offsetX,
+	this.sprite.position.y = this.y + i
 },
 WallSlice.prototype.updateDisplay = function(n, t, i) {
-	this.sprite.position.x = n + t * WallSlice.WIDTH + this.offsetX, this.sprite.position.y = this.y + i
+	this.sprite.position.x = n + t * WallSlice.WIDTH + this.offsetX,
+	this.sprite.position.y = this.y + i
 },
 WallSlice.prototype.removeDisplay = function() {
-	GameGlobal.PoolKeeper.returnWallSprite(this.type, this.sprite), this.sprite = null
+	GameGlobal.PoolKeeper.returnWallSprite(this.type, this.sprite),
+	this.sprite = null
 },
 WallSlice.prototype.checkCollision = function(n, t) {
 	var f = this.type < SliceType.WALL_RIGHT,
@@ -893,6 +915,7 @@ SliceType.WALKER = 521,
 SliceType.BOMB = 522,
 SliceType.JET = 523,
 SliceType.HALL3 = 524,
+
 CollapseSlice.constructor = CollapseSlice,
 CollapseSlice.prototype = Object.create(WallSlice.prototype),
 CollapseSlice.prototype.updateDisplay = function(n, t, i) {
@@ -911,7 +934,9 @@ CollapseSlice.prototype.removeDisplay = function() {
 },
 CollapseSlice.prototype.checkCollision = function(n, t) {
 	var i;
-	this.collapseObject.startCollapsing || (i = n.position.x - this.sprite.position.x, i > -WallSlice.WIDTH && (this.collapseObject.startCollapsing = !0, GameGlobal.SoundPlayer.sound.play("crumble"), GameGlobal.ScreenQuake.startWithIntensity(.01, 3))), n.position.y >= this.sprite.position.y - n.height && (i = n.position.x - this.sprite.position.x, i > 0 && i < this.width && n.hitBottom(this.sprite.position.y + Math.ceil(this.collapsePhysics.deltaPos.y) - n.height)), t && t.animationTime > 0 && t.shards.forEach(function(n) {
+	this.collapseObject.startCollapsing || (i = n.position.x - this.sprite.position.x, i > -WallSlice.WIDTH && (this.collapseObject.startCollapsing = !0,
+		GameGlobal.SoundPlayer.sound.play("crumble"),
+		GameGlobal.ScreenQuake.startWithIntensity(.01, 3))), n.position.y >= this.sprite.position.y - n.height && (i = n.position.x - this.sprite.position.x, i > 0 && i < this.width && n.hitBottom(this.sprite.position.y + Math.ceil(this.collapsePhysics.deltaPos.y) - n.height)), t && t.animationTime > 0 && t.shards.forEach(function(n) {
 		if (n.sprite.position.y >= this.sprite.position.y - n.sprite.height / 10) {
 			var t = n.sprite.position.x - this.sprite.position.x;
 			t > 0 && t < this.width && n.hitBottom(this.sprite.position.y - n.sprite.height / 10)
@@ -1545,10 +1570,14 @@ ScrollForeground.prototype.setPlayer = function(n) {
 ScrollForeground.prototype.setShards = function(n) {
 	this.shards = n
 },
-ScrollBackground.constructor = ScrollBackground, ScrollBackground.prototype = Object.create(PIXI.TilingSprite.prototype), PlayerAsset.prototype.constructor = PlayerAsset, PlayerAsset.prototype = Object.create(ScrollMovie.prototype), PlayerAsset.GRAVITY = 1200, PlayerAsset.prototype.jumpPressed = function() {
+ScrollBackground.constructor = ScrollBackground,
+ScrollBackground.prototype = Object.create(PIXI.TilingSprite.prototype),
+PlayerAsset.prototype.constructor = PlayerAsset,
+PlayerAsset.prototype = Object.create(ScrollMovie.prototype),
+PlayerAsset.GRAVITY = 1200,
+PlayerAsset.prototype.jumpPressed = function() {
 	if (game_over) {
-		window.main.restart();
-		return
+		return main.restart();
 	}
 	if (this.jump >= 0) {
 		if (this.jump === 0) {
@@ -1564,7 +1593,8 @@ ScrollBackground.constructor = ScrollBackground, ScrollBackground.prototype = Ob
 					GameGlobal.SoundPlayer.sound.play("jump3")
 			}
 		}
-		this.jump += GameGlobal.TimeKeeper.elapsed * .001, this.jump > this.jumpLimit && (this.jump = -1)
+		this.jump += GameGlobal.TimeKeeper.elapsed * .001,
+		this.jump > this.jumpLimit && (this.jump = -1)
 	} else this.jump = -1
 },
 PlayerAsset.prototype.update = function() {
@@ -1588,7 +1618,12 @@ PlayerAsset.prototype.updateSpeed = function() {
 	this.objectPhysics.velocity.x < 0 ? this.objectPhysics.velocity.x = 0 : this.objectPhysics.acceleration.x = this.objectPhysics.velocity.x < 100 ? 60 : this.objectPhysics.velocity.x < 250 ? 36 : this.objectPhysics.velocity.x < 400 ? 24 : this.objectPhysics.velocity.x < 600 ? 12 : 4
 },
 PlayerAsset.prototype.updateJump = function() {
-	this.objectPhysics.velocity.y === this.objectPhysics.maxVelocity.y && (this.my += GameGlobal.TimeKeeper.elapsedSec), this.onFloor ? (this.objectPhysics.velocity.y = 0, this.objectPhysics.acceleration.y = 0) : this.objectPhysics.acceleration.y = PlayerAsset.GRAVITY, this.jump > 0 && (this.objectPhysics.velocity.y = this.jump < .08 ? -this.maxVelocity.y * .65 : -this.maxVelocity.y), this.jumpLimit = this.objectPhysics.velocity.x / (this.maxVelocity.x * 2.5), this.jumpLimit > .35 && (this.jumpLimit = .35), this.onFloor ? this.jump = 0 : this.prevJump === this.jump ? this.jump = -1 : this.prevJump = this.jump
+	this.objectPhysics.velocity.y === this.objectPhysics.maxVelocity.y && (this.my += GameGlobal.TimeKeeper.elapsedSec),
+	this.onFloor ? (this.objectPhysics.velocity.y = 0, this.objectPhysics.acceleration.y = 0) : this.objectPhysics.acceleration.y = PlayerAsset.GRAVITY,
+	this.jump > 0 && (this.objectPhysics.velocity.y = this.jump < .08 ? -this.maxVelocity.y * .65 : -this.maxVelocity.y),
+	this.jumpLimit = this.objectPhysics.velocity.x / (this.maxVelocity.x * 2.5),
+	this.jumpLimit > .35 && (this.jumpLimit = .35),
+	this.onFloor ? this.jump = 0 : this.prevJump === this.jump ? this.jump = -1 : this.prevJump = this.jump
 },
 PlayerAsset.prototype.updateAnimation = function() {
 	this.onFloor && this.stumble && this.textures !== this.stumbleFrames ? (this.loop = !1, this.animationSpeed = .3, this.textures = this.stumbleFrames, this.gotoAndPlay(0)) : this.onFloor && this.textures !== this.run1Frames && (this.textures !== this.stumbleFrames || !this.playing) ? (this.loop = !0, this.animationSpeed = .5, this.textures = this.run1Frames, this.gotoAndPlay(0)) : this.jump > 0 && this.textures !== this.jumpFrames ? (this.animationSpeed = .1, this.textures = this.jumpFrames, this.gotoAndPlay(0)) : !this.onFloor && this.objectPhysics.velocity.y > 0 && this.textures !== this.fallFrames && (this.loop = !0, this.animationSpeed = .2, this.textures = this.fallFrames, this.gotoAndPlay(0))
@@ -1616,16 +1651,23 @@ PlayerAsset.prototype.buildSounds = function() {
 	this.feet = ["foot1", "foot2", "foot3", "foot4", ""], this.feetC = ["footc1", "footc2", "footc3", "footc4", ""]
 },
 PlayerAsset.prototype.buildFrames = function() {
-	this.run1Frames = [], this.run2Frames = [], this.jumpFrames = [], this.fallFrames = [], this.stumbleFrames = [];
+	this.run1Frames = [],
+	this.run2Frames = [],
+	this.jumpFrames = [],
+	this.fallFrames = [],
+	this.stumbleFrames = [];
 	for (var n = 1; n <= 38; n++) n <= 16 ? (this.run1Frames.push(this.getFrameTexture(n)), n % 2 == 1 && this.run2Frames.push(this.getFrameTexture(n))) : n <= 19 ? this.jumpFrames.push(this.getFrameTexture(n)) : n <= 26 ? this.fallFrames.push(this.getFrameTexture(n)) : n <= 38 && this.stumbleFrames.push(this.getFrameTexture(n))
 },
 PlayerAsset.prototype.getFrameTexture = function(n) {
 	return PIXI.Texture.fromFrame("raw/player" + n + ".png")
 },
 PlayerAsset.prototype.bindKeyHandlers = function() {
-	kd.Z.down(this.jumpPressed.bind(this))
+	// kd.Z.down(this.jumpPressed.bind(this))
 },
-HUD.constructor = HUD, HUD.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), HUD.DIGITS = 6, HUD.prototype.setDistance = function(n) {
+HUD.constructor = HUD,
+HUD.prototype = Object.create(PIXI.DisplayObjectContainer.prototype),
+HUD.DIGITS = 6,
+HUD.prototype.setDistance = function(n) {
 	this.distance !== n && (this.distance = n, this.updateCoordinates())
 },
 HUD.prototype.updateCoordinates = function() {
@@ -1724,12 +1766,13 @@ function Main() {
 	this.renderer = PIXI.autoDetectRenderer(GAME.width, GAME.height, canvas[0]);
 	this.width = dim.width;
 	this.height = dim.height;
-	this.loadSounds()
+	this.loadSounds();
 }
 
 function start_game() {
-	$("#frontpage").hide();
-	setTimeout("window.main.startGame();", 150);
+	// $("#frontpage").hide();
+	canabalt.content.addClass("playing");
+	setTimeout(() => main.startGame(), 150);
 }
 
 var Util = {
@@ -1757,6 +1800,7 @@ Main.prototype.loadSounds = function() {
 	GameGlobal.SoundPlayer.sound = new Howl(data.audio);
 	this.loadSpriteSheet()
 };
+
 Main.prototype.loadSpriteSheet = function() {
 	PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
 	var t = [
@@ -1768,16 +1812,22 @@ Main.prototype.loadSpriteSheet = function() {
 	n.onComplete = this.spriteSheetLoaded.bind(this);
 	n.load();
 };
+
 Main.prototype.soundsLoaded = function() {
 	this.loadSpriteSheet()
 };
+
 Main.prototype.spriteSheetLoaded = function() {
-	$("#frontpage").html("<br><br>CANABALT HTML5<br><br>CLICK TO JUMP/START GAME").on("click", start_game)
+	$(".start").on("click", start_game)
 };
+
 Main.prototype.startGame = function() {
 	GameGlobal.PoolKeeper.createPools();
 	this.scroller = new PlayState(this.stage, this.width, this.height);
 	window.requestAnimationFrame(this.update.bind(this));
+
+	// mute audio
+	window.Howler.mute(true);
 };
 
 Main.prototype.update = function(n) {
@@ -1786,12 +1836,16 @@ Main.prototype.update = function(n) {
 	this.scroller.update();
 	this.renderer.resize(GAME.width, GAME.height);
 	this.renderer.render(this.stage);
-	kd.tick();
+	// kd.tick();
 	window.requestAnimationFrame(this.update.bind(this));
 };
+
 Main.prototype.restart = function() {
 	game_over = !1;
-	for (var n = main.stage.children.length - 1; n >= 0; n--) main.stage.removeChild(main.stage.children[n]);
-	GameGlobal.PoolKeeper.createPools(), this.scroller = new PlayState(this.stage, this.width, this.height)
+	for (var n = main.stage.children.length - 1; n >= 0; n--) {
+		main.stage.removeChild(main.stage.children[n]);
+	}
+	GameGlobal.PoolKeeper.createPools();
+	this.scroller = new PlayState(this.stage, this.width, this.height);
 };
 

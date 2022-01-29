@@ -3068,14 +3068,14 @@ PIXI.InteractionManager.prototype.setTargetDomElement = function(domElement)
     this.removeEvents();
 
 
-    if (window.navigator.msPointerEnabled)
-    {
-        // time to remove some of that zoom in ja..
-        domElement.style['-ms-content-zooming'] = 'none';
-        domElement.style['-ms-touch-action'] = 'none';
+    // if (window.navigator.msPointerEnabled)
+    // {
+    //     // time to remove some of that zoom in ja..
+    //     domElement.style['-ms-content-zooming'] = 'none';
+    //     domElement.style['-ms-touch-action'] = 'none';
 
-        // DO some window specific touch!
-    }
+    //     // DO some window specific touch!
+    // }
 
     this.interactionDOMElement = domElement;
 

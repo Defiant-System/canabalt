@@ -14,19 +14,22 @@ let data = {
 @import "modules/all.js"
 
 
+let main = new Main;
+
+
 const canabalt = {
 	init() {
 		// fast references
 		this.content = window.find("content");
 		// set width + height of canvas
 		window.find("canvas").attr(GAME);
-
-		new Main;
-		// console.log( PIXI );
 	},
 	dispatch(event) {
 		switch (event.type) {
 			case "window.open":
+				break;
+			case "window.keystroke":
+				main.scroller.player.jumpPressed();
 				break;
 			case "open-help":
 				defiant.shell("fs -u '~/help/index.md'");
