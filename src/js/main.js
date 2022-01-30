@@ -1,20 +1,14 @@
 
+@import "modules/pixi.js"
+@import "modules/howler.js"
+@import "modules/kd.js"
+@import "modules/all.js"
+
+
 let GAME = {
 		width: window.innerWidth,
 		height: window.innerHeight,
 	};
-
-let data = {
-		audio: @import "../../public/data/audiohowler.json",
-	};
-
-
-@import "modules/pixi.js"
-@import "modules/howler.js"
-@import "modules/all.js"
-
-
-let main = new Main;
 
 
 const canabalt = {
@@ -28,17 +22,41 @@ const canabalt = {
 		window.Howler.mute(true);
 	},
 	dispatch(event) {
+		let Self = canabalt,
+			el;
 		switch (event.type) {
+			// system events
 			case "window.open":
 				break;
 			case "window.keystroke":
-				main.scroller.player.jumpPressed();
+				if (main.scroller) {
+					main.scroller.player.jumpPressed();
+				}
 				break;
 			case "open-help":
 				defiant.shell("fs -u '~/help/index.md'");
 				break;
+			// custom events
+			case "game-loaded":
+				Self.content.removeClass("loading").addClass("start-page");
+
+				setTimeout(() => Self.dispatch({ type: "start-game" }), 300);
+				
+				// setTimeout(() => {
+				// 	main.scroller.player.position.y = 500;
+				// }, 500);
+				break;
+			case "start-game":
+				Self.content.removeClass("start-page").addClass("playing");
+
+				setTimeout(() => main.startGame(), 100);
+				break;
 		}
 	}
 };
+
+let main = new Main;
+let APP = canabalt;
+
 
 window.exports = canabalt;

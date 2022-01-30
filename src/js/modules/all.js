@@ -38,29 +38,41 @@ function ObjectPhysics(n) {
 
 ObjectPhysics.prototype.update = function() {
 	var n = GameGlobal.TimeKeeper.elapsed * .001;
-	this.velocity.x += this.acceleration.x * n, this.velocity.y += this.acceleration.y * n, this.velocity.x = Math.min(this.velocity.x, this.maxVelocity.x), this.velocity.y = Math.min(this.velocity.y, this.maxVelocity.y), this.deltaPos.x = this.velocity.x * n, this.deltaPos.y = this.velocity.y * n, this.position.x += this.deltaPos.x, this.position.y += this.deltaPos.y, this.rotation += this.angularVelocity * n
+	this.velocity.x += this.acceleration.x * n;
+	this.velocity.y += this.acceleration.y * n;
+	this.velocity.x = Math.min(this.velocity.x, this.maxVelocity.x);
+	this.velocity.y = Math.min(this.velocity.y, this.maxVelocity.y);
+	this.deltaPos.x = this.velocity.x * n;
+	this.deltaPos.y = this.velocity.y * n;
+	this.position.x += this.deltaPos.x;
+	this.position.y += this.deltaPos.y;
+	this.rotation += this.angularVelocity * n;
 }
 
 
 function ObjectPool() {
-	this.createObjectPool()
+	this.createObjectPool();
 }
 
 ObjectPool.prototype.createObjectPool = function() {
-	this.containerLookup = []
-};
+	this.containerLookup = [];
+}
+
 ObjectPool.prototype.borrowObjectFromContainer = function(n) {
-	return n.shift()
-};
+	return n.shift();
+}
+
 ObjectPool.prototype.returnObjectToContainer = function(n, t) {
-	t.push(n)
-};
+	t.push(n);
+}
+
 ObjectPool.prototype.borrowObject = function(n) {
 	var t = this.borrowObjectFromContainer(this.containerLookup[n]);
-	return t || console.log("out of " + n), t
-};
+	return t || console.log("out of " + n), t;
+}
+
 ObjectPool.prototype.returnObject = function(n, t) {
-	this.returnObjectToContainer(t, this.containerLookup[n])
+	this.returnObjectToContainer(t, this.containerLookup[n]);
 }
 
 
@@ -69,120 +81,135 @@ function SpriteObjectPool() {
 	ObjectPool.call(this)
 }
 
-SpriteObjectPool.constructor = SpriteObjectPool,
-SpriteObjectPool.prototype = Object.create(ObjectPool.prototype),
+SpriteObjectPool.constructor = SpriteObjectPool;
+
+SpriteObjectPool.prototype = Object.create(ObjectPool.prototype);
+
 SpriteObjectPool.prototype.createObjectPool = function() {
-	ObjectPool.prototype.createObjectPool.call(this),
-	this.createObject4Variation(500, "raw/roof{0}-middle.png", SliceType.ROOF_MIDDLE),
-	this.createObject4Variation(100, "raw/roof{0}-left.png", SliceType.ROOF_LEFT),
-	this.createObject4Variation(100, "raw/roof{0}-right.png", SliceType.ROOF_RIGHT),
-	this.createObject4Variation(1e3, "raw/wall{0}-middle.png", SliceType.WALL_MIDDLE),
-	this.createObject4Variation(1e3, "raw/wall{0}-left.png", SliceType.WALL_LEFT),
-	this.createObject4Variation(1e3, "raw/wall{0}-right.png", SliceType.WALL_RIGHT),
-	this.createObjectNVariation2(500, "raw/roof{0}-middle-cracked{1}.png", SliceType.ROOF_MIDDLE_CRACKED, 4, 8),
-	this.createObjectNVariation2(100, "raw/roof{0}-left-cracked{1}.png", SliceType.ROOF_LEFT_CRACKED, 4, 8),
-	this.createObjectNVariation2(100, "raw/roof{0}-right-cracked{1}.png", SliceType.ROOF_RIGHT_CRACKED, 4, 8),
-	this.createObjectNVariation2(500, "raw/wall{0}-middle-cracked{1}.png", SliceType.WALL_MIDDLE_CRACKED, 4, 8),
-	this.createObjectNVariation2(100, "raw/wall{0}-left-cracked{1}.png", SliceType.WALL_LEFT_CRACKED, 4, 8),
-	this.createObjectNVariation2(100, "raw/wall{0}-right-cracked{1}.png", SliceType.WALL_RIGHT_CRACKED, 4, 8),
-	this.createObjectNVariation(10, "raw/floor{0}-left.png", SliceType.FLOOR_LEFT, 2),
-	this.createObjectNVariation(100, "raw/floor{0}-middle.png", SliceType.FLOOR_MIDDLE, 2),
-	this.createObjectNVariation(10, "raw/floor{0}-right.png", SliceType.FLOOR_RIGHT, 2),
-	this.createObjectNVariation(100, "raw/hall{0}1.png", SliceType.HALL_LEFT, 2),
-	this.createObjectNVariation(500, "raw/hall{0}2.png", SliceType.HALL_MIDDLE, 2),
-	this.createObjectNVariation(100, "raw/hall{0}3.png", SliceType.HALL_RIGHT, 2),
-	this.createSpriteObject(10, "raw/crane11.png", SliceType.CRANE1_LEFT),
-	this.createSpriteObject(100, "raw/crane12.png", SliceType.CRANE1_MIDDLE),
-	this.createSpriteObject(10, "raw/crane13.png", SliceType.CRANE1_RIGHT),
-	this.createSpriteObject(50, "raw/crane2.png", SliceType.CRANE2),
-	this.createSpriteObject(10, "raw/crane3.png", SliceType.CRANE3),
-	this.createSpriteObject(10, "raw/crane4.png", SliceType.CRANE4),
-	this.createSpriteObject(10, "raw/crane5.png", SliceType.CRANE5),
-	this.createSpriteObject(100, "raw/girder216.png", SliceType.GIRDER2),
-	this.createSpriteObject(500, "raw/block.png", SliceType.BLOCK),
-	this.createObjectNVariation(50, "raw/glass{0}.png", SliceType.GLASS, 48),
-	this.createObject4Variation(10, "raw/doors{0}.png", SliceType.DOOR),
-	this.createObject4Variation(500, "raw/window{0}1.png", SliceType.WINDOW),
-	this.createObject4Variation(500, "raw/window{0}2.png", SliceType.WINDOW + 10),
-	this.createObject4Variation(500, "raw/window{0}3.png", SliceType.WINDOW + 20),
-	this.createObject4Variation(500, "raw/window{0}4.png", SliceType.WINDOW + 30),
-	this.createSpriteObject(50, "raw/fence.png", SliceType.FENCE),
-	this.createSpriteObject(100, "raw/slope1.png", SliceType.SLOPE_LEFT),
-	this.createSpriteObject(1e3, "raw/slope2.png", SliceType.SLOPE_MIDDLE),
-	this.createSpriteObject(100, "raw/slope3.png", SliceType.SLOPE_RIGHT),
-	this.createSpriteObject(100, "raw/pipe11.png", SliceType.PIPE1_LEFT),
-	this.createSpriteObject(1e3, "raw/pipe12.png", SliceType.PIPE1_MIDDLE),
-	this.createSpriteObject(100, "raw/pipe13.png", SliceType.PIPE1_RIGHT),
-	this.createSpriteObject(100, "raw/pipe2.png", SliceType.PIPE2),
-	this.createSpriteObject(10, "raw/reservoir.png", SliceType.RESERVOIR),
-	this.createObjectNVariation(20, "raw/antenna{0}.png", SliceType.ANTENNA, 7),
-	this.createSpriteObject(50, "raw/ac.png", SliceType.AC),
-	this.createSpriteObject(50, "raw/skylight.png", SliceType.SKYLIGHT),
-	this.createSpriteObject(50, "raw/access.png", SliceType.ACCESS),
-	this.createSpriteObject(50, "raw/escape.png", SliceType.ESCAPE),
-	this.createObjectNVariation(50, "raw/obstacles1{0}.png", SliceType.OBSTACLES, 4),
-	this.createObjectNVariation(50, "raw/obstacles2{0}.png", SliceType.OBSTACLES2, 2),
-	this.createObjectNVariation(500, "raw/demo_gibs{0}.png", SliceType.GIBS, 6),
-	this.createObjectNVariation(250, "raw/smoke{0}.png", SliceType.SMOKE, 4),
-	this.createSpriteObject(2, "raw/bomb.png", SliceType.BOMB),
-	this.createSpriteObject(1, "raw/jet.png", SliceType.JET)
-};
+	ObjectPool.prototype.createObjectPool.call(this);
+	this.createObject4Variation(500, "raw/roof{0}-middle.png", SliceType.ROOF_MIDDLE);
+	this.createObject4Variation(100, "raw/roof{0}-left.png", SliceType.ROOF_LEFT);
+	this.createObject4Variation(100, "raw/roof{0}-right.png", SliceType.ROOF_RIGHT);
+	this.createObject4Variation(1e3, "raw/wall{0}-middle.png", SliceType.WALL_MIDDLE);
+	this.createObject4Variation(1e3, "raw/wall{0}-left.png", SliceType.WALL_LEFT);
+	this.createObject4Variation(1e3, "raw/wall{0}-right.png", SliceType.WALL_RIGHT);
+	this.createObjectNVariation2(500, "raw/roof{0}-middle-cracked{1}.png", SliceType.ROOF_MIDDLE_CRACKED, 4, 8);
+	this.createObjectNVariation2(100, "raw/roof{0}-left-cracked{1}.png", SliceType.ROOF_LEFT_CRACKED, 4, 8);
+	this.createObjectNVariation2(100, "raw/roof{0}-right-cracked{1}.png", SliceType.ROOF_RIGHT_CRACKED, 4, 8);
+	this.createObjectNVariation2(500, "raw/wall{0}-middle-cracked{1}.png", SliceType.WALL_MIDDLE_CRACKED, 4, 8);
+	this.createObjectNVariation2(100, "raw/wall{0}-left-cracked{1}.png", SliceType.WALL_LEFT_CRACKED, 4, 8);
+	this.createObjectNVariation2(100, "raw/wall{0}-right-cracked{1}.png", SliceType.WALL_RIGHT_CRACKED, 4, 8);
+	this.createObjectNVariation(10, "raw/floor{0}-left.png", SliceType.FLOOR_LEFT, 2);
+	this.createObjectNVariation(100, "raw/floor{0}-middle.png", SliceType.FLOOR_MIDDLE, 2);
+	this.createObjectNVariation(10, "raw/floor{0}-right.png", SliceType.FLOOR_RIGHT, 2);
+	this.createObjectNVariation(100, "raw/hall{0}1.png", SliceType.HALL_LEFT, 2);
+	this.createObjectNVariation(500, "raw/hall{0}2.png", SliceType.HALL_MIDDLE, 2);
+	this.createObjectNVariation(100, "raw/hall{0}3.png", SliceType.HALL_RIGHT, 2);
+	this.createSpriteObject(10, "raw/crane11.png", SliceType.CRANE1_LEFT);
+	this.createSpriteObject(100, "raw/crane12.png", SliceType.CRANE1_MIDDLE);
+	this.createSpriteObject(10, "raw/crane13.png", SliceType.CRANE1_RIGHT);
+	this.createSpriteObject(50, "raw/crane2.png", SliceType.CRANE2);
+	this.createSpriteObject(10, "raw/crane3.png", SliceType.CRANE3);
+	this.createSpriteObject(10, "raw/crane4.png", SliceType.CRANE4);
+	this.createSpriteObject(10, "raw/crane5.png", SliceType.CRANE5);
+	this.createSpriteObject(100, "raw/girder216.png", SliceType.GIRDER2);
+	this.createSpriteObject(500, "raw/block.png", SliceType.BLOCK);
+	this.createObjectNVariation(50, "raw/glass{0}.png", SliceType.GLASS, 48);
+	this.createObject4Variation(10, "raw/doors{0}.png", SliceType.DOOR);
+	this.createObject4Variation(500, "raw/window{0}1.png", SliceType.WINDOW);
+	this.createObject4Variation(500, "raw/window{0}2.png", SliceType.WINDOW + 10);
+	this.createObject4Variation(500, "raw/window{0}3.png", SliceType.WINDOW + 20);
+	this.createObject4Variation(500, "raw/window{0}4.png", SliceType.WINDOW + 30);
+	this.createSpriteObject(50, "raw/fence.png", SliceType.FENCE);
+	this.createSpriteObject(100, "raw/slope1.png", SliceType.SLOPE_LEFT);
+	this.createSpriteObject(1e3, "raw/slope2.png", SliceType.SLOPE_MIDDLE);
+	this.createSpriteObject(100, "raw/slope3.png", SliceType.SLOPE_RIGHT);
+	this.createSpriteObject(100, "raw/pipe11.png", SliceType.PIPE1_LEFT);
+	this.createSpriteObject(1e3, "raw/pipe12.png", SliceType.PIPE1_MIDDLE);
+	this.createSpriteObject(100, "raw/pipe13.png", SliceType.PIPE1_RIGHT);
+	this.createSpriteObject(100, "raw/pipe2.png", SliceType.PIPE2);
+	this.createSpriteObject(10, "raw/reservoir.png", SliceType.RESERVOIR);
+	this.createObjectNVariation(20, "raw/antenna{0}.png", SliceType.ANTENNA, 7);
+	this.createSpriteObject(50, "raw/ac.png", SliceType.AC);
+	this.createSpriteObject(50, "raw/skylight.png", SliceType.SKYLIGHT);
+	this.createSpriteObject(50, "raw/access.png", SliceType.ACCESS);
+	this.createSpriteObject(50, "raw/escape.png", SliceType.ESCAPE);
+	this.createObjectNVariation(50, "raw/obstacles1{0}.png", SliceType.OBSTACLES, 4);
+	this.createObjectNVariation(50, "raw/obstacles2{0}.png", SliceType.OBSTACLES2, 2);
+	this.createObjectNVariation(500, "raw/demo_gibs{0}.png", SliceType.GIBS, 6);
+	this.createObjectNVariation(250, "raw/smoke{0}.png", SliceType.SMOKE, 4);
+	this.createSpriteObject(2, "raw/bomb.png", SliceType.BOMB);
+	this.createSpriteObject(1, "raw/jet.png", SliceType.JET);
+}
+
 SpriteObjectPool.prototype.createSpriteObject = function(n, t, i) {
 	this.containerLookup[i] = [];
-	this.addSprites(n, t, this.containerLookup[i])
-};
+	this.addSprites(n, t, this.containerLookup[i]);
+}
+
 SpriteObjectPool.prototype.addSprites = function(n, t, i) {
-	for (var u, r = 0; r < n; r++) u = PIXI.Sprite.fromFrame(t), i.push(u)
-};
+	for (var u, r = 0; r < n; r++) u = PIXI.Sprite.fromFrame(t), i.push(u);
+}
+
 SpriteObjectPool.prototype.createObject4Variation = function(n, t, i) {
-	this.createObjectNVariation(n, t, i, 4)
-};
+	this.createObjectNVariation(n, t, i, 4);
+}
+
 SpriteObjectPool.prototype.createObjectNVariation = function(n, t, i, r) {
 	function f(n, t) {
-		return n.replace("{0}", t)
+		return n.replace("{0}", t);
 	}
-	for (var u = 0; u < r; u++) this.createSpriteObject(n, f(t, u + 1), i + u)
-};
+	for (var u = 0; u < r; u++) this.createSpriteObject(n, f(t, u + 1), i + u);
+}
+
 SpriteObjectPool.prototype.createObjectNVariation2 = function(n, t, i, r, u) {
 	function o(n, t, i) {
-		return n.replace("{0}", t).replace("{1}", i)
+		return n.replace("{0}", t).replace("{1}", i);
 	}
-	for (var e, f = 0; f < r; f++)
-		for (e = 0; e < u; e++) this.createSpriteObject(n, o(t, f + 1, e + 1), i + f * u + e)
+	for (var e, f = 0; f < r; f++) {
+		for (e = 0; e < u; e++) this.createSpriteObject(n, o(t, f + 1, e + 1), i + f * u + e);
+	}
 }
 
 
 
 function MovieObjectPool() {
-	ObjectPool.call(this)
+	ObjectPool.call(this);
 }
 
-MovieObjectPool.constructor = MovieObjectPool,
-MovieObjectPool.prototype = Object.create(ObjectPool.prototype),
+MovieObjectPool.constructor = MovieObjectPool;
+
+MovieObjectPool.prototype = Object.create(ObjectPool.prototype);
+
 MovieObjectPool.prototype.createObjectPool = function() {
-	ObjectPool.prototype.createObjectPool.call(this), 
-	this.createMovieObject(100, "raw/dove{0}.png", 4, SliceType.PIGEON), 
-	this.createMovieObject(50, "raw/walker{0}.png", 12, SliceType.WALKER)
-};
+	ObjectPool.prototype.createObjectPool.call(this);
+	this.createMovieObject(100, "raw/dove{0}.png", 4, SliceType.PIGEON);
+	this.createMovieObject(50, "raw/walker{0}.png", 12, SliceType.WALKER);
+}
+
 MovieObjectPool.prototype.createMovieObject = function(n, t, i, r) {
-	this.containerLookup[r] = [], 
-	this.addMovies(n, t, i, this.containerLookup[r])
-};
+	this.containerLookup[r] = [];
+	this.addMovies(n, t, i, this.containerLookup[r]);
+}
+
 MovieObjectPool.prototype.addMovies = function(n, t, i, r) {
-	for (var f, u = 0; u < n; u++) f = this.createMovie(t, i), r.push(f)
-};
+	for (var f, u = 0; u < n; u++) f = this.createMovie(t, i), r.push(f);
+}
+
 MovieObjectPool.prototype.createMovie = function(n, t) {
 	for (var r = [], u, f, i = 1; i <= t; i++) u = PIXI.Texture.fromFrame(Util.format(n, i)), r.push(u);
-	return f = new PIXI.MovieClip(r)
-};
+	return f = new PIXI.MovieClip(r);
+}
 
 
 
 function GraphicObjectPool() {
 	ObjectPool.call(this)
 }
-GraphicObjectPool.prototype.constructor = GraphicObjectPool,
-GraphicObjectPool.prototype = Object.create(ObjectPool.prototype),
+GraphicObjectPool.prototype.constructor = GraphicObjectPool;
+
+GraphicObjectPool.prototype = Object.create(ObjectPool.prototype);
+
 GraphicObjectPool.prototype.createObjectPool = function() {
 	ObjectPool.prototype.createObjectPool.call(this),
 	this.createGraphicObject(15, this.createGlassWindowGraphic, SliceType.GLASSWINDOW),
@@ -351,7 +378,7 @@ function ScreenQuake() {
 }
 
 function SoundPlayer() {
-	this.jsonLoader = new PIXI.JsonLoader("data/sprites/audiohowler.json");
+	this.jsonLoader = new PIXI.JsonLoader("~/data/audiohowler.json");
 	this.sound = null;
 	this.music = null;
 	this.onComplete = null;
@@ -362,6 +389,7 @@ function SoundPlayer() {
 
 	this.jsonLoaded = function() {
 		var n = this.jsonLoader.json;
+		n.urls[0] = "~/audio/audiohowler.mp3";
 		n.loop = !0;
 		n.onload = this.musicLoaded.bind(this);
 		this.music = new Howl(n);
@@ -369,6 +397,7 @@ function SoundPlayer() {
 
 	this.musicLoaded = function() {
 		var n = this.jsonLoader.json;
+		n.urls[0] = "~/audio/audiohowler.mp3";
 		n.loop = !1;
 		n.onload = this.soundsLoaded.bind(this);
 		this.sound = new Howl(n);
@@ -1077,13 +1106,19 @@ ShardsAsset.prototype.initShards = function(n, t, i) {
 ShardsAsset.prototype.updateShards = function() {
 	for (var n = 0; n < this.shards.length; n++) this.shards[n].update(this.viewportX, this.viewportY)
 },
-GlassWindow.constructor = GlassWindow, GlassWindow.prototype = Object.create(GraphicSlice.prototype), GlassWindow.prototype.checkCollision = function(n) {
+GlassWindow.constructor = GlassWindow,
+GlassWindow.prototype = Object.create(GraphicSlice.prototype),
+GlassWindow.prototype.checkCollision = function(n) {
 	this.sprite.alpha !== 0 && this.sprite.position.x - n.position.x < n.width && (this.sprite.alpha = 0, this.shardAsset !== null && this.shardAsset.shatter(this.sprite.position.x, this.sprite.position.y, {
 		x: n.objectPhysics.velocity.x,
 		y: n.objectPhysics.velocity.y
 	}))
 },
-GlassWindow.HEIGHT = 4 * WallSlice.SCALE, GlassWindow.WIDTH = 4 * WallSlice.SCALE, Hall3Slice.constructor = Hall3Slice, Hall3Slice.prototype = Object.create(GraphicSlice.prototype), Hall3Slice.prototype.checkCollision = function(n, t) {
+GlassWindow.HEIGHT = 4 * WallSlice.SCALE,
+GlassWindow.WIDTH = 4 * WallSlice.SCALE,
+Hall3Slice.constructor = Hall3Slice,
+Hall3Slice.prototype = Object.create(GraphicSlice.prototype),
+Hall3Slice.prototype.checkCollision = function(n, t) {
 	var r = this.hallUp,
 		i;
 	r && (n.position.y <= this.sprite.position.y && (i = n.position.x - this.sprite.position.x, i > 0 && i < WallSlice.WIDTH && n.hitUp(this.sprite.position.y)), t && t.animationTime > 0 && t.shards.forEach(function(n) {
@@ -1101,7 +1136,12 @@ GraphicSlice.prototype.updateDisplay = function(n, t, i) {
 GraphicSlice.prototype.removeDisplay = function() {
 	GameGlobal.PoolKeeper.returnGraphic(this.type, this.sprite), this.sprite = null
 },
-GraphicSlice.prototype.checkCollision = function() {}, ObstacleSlice.constructor = ObstacleSlice, ObstacleSlice.prototype = Object.create(WallSlice.prototype), ObstacleSlice.WIDTH = 18 * WallSlice.SCALE, ObstacleSlice.HEIGHT = 18 * WallSlice.SCALE, ObstacleSlice.prototype.initDisplay = function(n, t, i) {
+GraphicSlice.prototype.checkCollision = function() {},
+ObstacleSlice.constructor = ObstacleSlice,
+ObstacleSlice.prototype = Object.create(WallSlice.prototype),
+ObstacleSlice.WIDTH = 18 * WallSlice.SCALE,
+ObstacleSlice.HEIGHT = 18 * WallSlice.SCALE,
+ObstacleSlice.prototype.initDisplay = function(n, t, i) {
 	WallSlice.prototype.initDisplay.call(this, n, t, i), this.sprite.anchor = {
 		x: .5,
 		y: .5
@@ -1582,6 +1622,7 @@ PlayerAsset.prototype.jumpPressed = function() {
 	if (game_over) {
 		return main.restart();
 	}
+	console.log(this.jump);
 	if (this.jump >= 0) {
 		if (this.jump === 0) {
 			var n = Util.random(4);
@@ -1772,11 +1813,6 @@ function Main() {
 	this.loadSounds();
 }
 
-function start_game() {
-	// $("#frontpage").hide();
-	canabalt.content.addClass("playing");
-	setTimeout(() => main.startGame(), 150);
-}
 
 var Util = {
 	format: function(n, t) {
@@ -1796,16 +1832,13 @@ game_over;
 
 
 Main.prototype.loadSounds = function() {
-	// GameGlobal.SoundPlayer.onComplete = this.soundsLoaded.bind(this),
-	// GameGlobal.SoundPlayer.load()
-
-	GameGlobal.SoundPlayer.music = new Howl(data.audio);
-	GameGlobal.SoundPlayer.sound = new Howl(data.audio);
-	this.loadSpriteSheet()
+	GameGlobal.SoundPlayer.onComplete = this.soundsLoaded.bind(this);
+	GameGlobal.SoundPlayer.load();
 };
 
 Main.prototype.loadSpriteSheet = function() {
 	PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
+
 	var t = [
 			"~/data/canabaltpnotrim0.json",
 			"~/data/canabaltpnotrim1.json",
@@ -1821,13 +1854,13 @@ Main.prototype.soundsLoaded = function() {
 };
 
 Main.prototype.spriteSheetLoaded = function() {
-	$(".start").on("click", start_game)
+	APP.dispatch({ type: "game-loaded" });
 };
 
 Main.prototype.startGame = function() {
 	GameGlobal.PoolKeeper.createPools();
 	this.scroller = new PlayState(this.stage, this.width, this.height);
-	window.requestAnimationFrame(this.update.bind(this));
+	requestAnimationFrame(this.update.bind(this));
 };
 
 Main.prototype.update = function(n) {
@@ -1837,7 +1870,7 @@ Main.prototype.update = function(n) {
 	this.renderer.resize(GAME.width, GAME.height);
 	this.renderer.render(this.stage);
 	// kd.tick();
-	window.requestAnimationFrame(this.update.bind(this));
+	requestAnimationFrame(this.update.bind(this));
 };
 
 Main.prototype.restart = function() {

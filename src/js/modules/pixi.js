@@ -3756,7 +3756,7 @@ PIXI.Stage.prototype.getMousePosition = function()
  * A polyfill for cancelAnimationFrame
  *
  * @method cancelAnimationFrame
- */
+ * /
 var lastTime = 0;
 var vendors = ['ms', 'moz', 'webkit', 'o'];
 for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
@@ -3783,6 +3783,7 @@ if (!window.cancelAnimationFrame) {
 }
 
 window.requestAnimFrame = window.requestAnimationFrame;
+*/
 
 /**
  * Converts a hex color number to an [R, G, B] array
@@ -4044,7 +4045,7 @@ PIXI.autoDetectRenderer = function(width, height, view, transparent, antialias)
     // BORROWED from Mr Doob (mrdoob.com)
     var webgl = ( function () { try {
                                     var canvas = document.createElement( 'canvas' );
-                                    return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) );
+                                    return !! WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) );
                                 } catch( e ) {
                                     return false;
                                 }
@@ -4170,7 +4171,7 @@ PIXI.PolyK.Triangulate = function(p)
             }
             else
             {
-                window.console.log("PIXI Warning: shape too complex to fill");
+                console.log("PIXI Warning: shape too complex to fill");
                 return [];
             }
         }
@@ -4262,7 +4263,7 @@ PIXI._CompileShader = function(gl, shaderSrc, shaderType)
     gl.compileShader(shader);
 
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        window.console.log(gl.getShaderInfoLog(shader));
+        console.log(gl.getShaderInfoLog(shader));
         return null;
     }
 
@@ -4281,7 +4282,7 @@ PIXI.compileProgram = function(gl, vertexSrc, fragmentSrc)
     gl.linkProgram(shaderProgram);
 
     if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-        window.console.log("Could not initialise shaders");
+        console.log("Could not initialise shaders");
     }
 
     return shaderProgram;
@@ -8551,7 +8552,7 @@ PIXI.CanvasGraphics.renderGraphicsMask = function(graphics, context)
     if(len > 1)
     {
         len = 1;
-        window.console.log('Pixi.js warning: masks in canvas can only mask using the first path in the graphics object');
+        console.log('Pixi.js warning: masks in canvas can only mask using the first path in the graphics object');
     }
 
     for (var i = 0; i < 1; i++)
@@ -12351,7 +12352,7 @@ PIXI.JsonLoader.prototype.load = function () {
  */
 PIXI.JsonLoader.prototype.onJSONLoaded = function () {
     if (this.ajaxRequest.readyState === 4) {
-        if (this.ajaxRequest.status === 200 || window.location.protocol.indexOf('http') === -1) {
+        if (this.ajaxRequest.status === 200 || location.protocol.indexOf('http') === -1) {
             this.json = JSON.parse(this.ajaxRequest.responseText);
 
             if(this.json.frames)
