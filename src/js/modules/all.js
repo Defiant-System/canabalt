@@ -1305,14 +1305,9 @@ ObstacleSlice.prototype.checkCollision = function(n) {
 	if (n.position.y >= this.sprite.position.y - n.height && (t = n.position.x + n.width - this.sprite.position.x, t > 0 && t < this.width && !this.stumble)) {
 		n.hitObstacle(), this.stumble = !0, i = Util.random(3);
 		switch (i) {
-			case 0:
-				GameGlobal.SoundPlayer.sound.play("obstacle1");
-				break;
-			case 1:
-				GameGlobal.SoundPlayer.sound.play("obstacle2");
-				break;
-			case 2:
-				GameGlobal.SoundPlayer.sound.play("obstacle3")
+			case 0: GameGlobal.SoundPlayer.sound.play("obstacle1"); break;
+			case 1: GameGlobal.SoundPlayer.sound.play("obstacle2"); break;
+			case 2: GameGlobal.SoundPlayer.sound.play("obstacle3"); break;
 		}
 		this.stumblePhysics.velocity.y = -120, this.stumblePhysics.velocity.x = n.objectPhysics.velocity.x + Util.random(100) - 50
 	}
@@ -1801,14 +1796,9 @@ PlayerAsset.prototype.jumpPressed = function() {
 		if (this.jump === 0) {
 			var n = Util.random(4);
 			switch (n) {
-				case 0:
-					GameGlobal.SoundPlayer.sound.play("jump1");
-					break;
-				case 1:
-					GameGlobal.SoundPlayer.sound.play("jump2");
-					break;
-				case 2:
-					GameGlobal.SoundPlayer.sound.play("jump3")
+				case 0: GameGlobal.SoundPlayer.sound.play("jump1"); break;
+				case 1: GameGlobal.SoundPlayer.sound.play("jump2"); break;
+				case 2: GameGlobal.SoundPlayer.sound.play("jump3"); break;
 			}
 		}
 		this.jump += GameGlobal.TimeKeeper.elapsed * .001,
@@ -1929,61 +1919,28 @@ PlayState.prototype.updatePlayerEpitaph = function(n) {
 			else {
 				t = this.mapBuilder.getType();
 				switch (t) {
-					case MapBuilder.TYPES.HALLWAY:
-						this.player.epitaph = "\nmissing another window.";
-						break;
-					case MapBuilder.TYPES.COLLAPSE:
-						this.player.epitaph = "\nknocking a building down.";
-						break;
-					case MapBuilder.TYPES.CRANE:
-						this.player.epitaph = "somehow\n hitting the edge of a crane.";
-						break;
-					case MapBuilder.TYPES.BILLBOARD:
-						this.player.epitaph = "somehow\nhitting the edge of a billboard.";
-						break;
-					case MapBuilder.TYPES.LEG:
-						this.player.epitaph = "colliding\nwith some enormous obstacle.";
-						break;
-					default:
-						this.player.epitaph = "hitting\na wall and tumbling to your death."
+					case MapBuilder.TYPES.HALLWAY: this.player.epitaph = "\nmissing another window."; break;
+					case MapBuilder.TYPES.COLLAPSE: this.player.epitaph = "\nknocking a building down."; break;
+					case MapBuilder.TYPES.CRANE: this.player.epitaph = "somehow\n hitting the edge of a crane."; break;
+					case MapBuilder.TYPES.BILLBOARD: this.player.epitaph = "somehow\nhitting the edge of a billboard."; break;
+					case MapBuilder.TYPES.LEG: this.player.epitaph = "colliding\nwith some enormous obstacle."; break;
+					default: this.player.epitaph = "hitting\na wall and tumbling to your death."
 				}
 			}
 	else if (i = this.mapBuilder.getType(), t = this.mapBuilder.nextType(), t > 0) switch (t) {
-		case MapBuilder.TYPES.HALLWAY:
-			this.player.epitaph = "completely\n missing the entire hallway.";
-			break;
-		case MapBuilder.TYPES.CRANE:
-			this.player.epitaph = "\n missing a crane completely.";
-			break;
-		case MapBuilder.TYPES.BILLBOARD:
-			this.player.epitaph = "not\nquite reaching a billboard.";
-			break;
-		case MapBuilder.TYPES.LEG:
-			this.player.epitaph = "landing\nwhere a building used to be.";
-			break;
-		default:
-			this.player.epitaph = "\nfalling to your death."
+		case MapBuilder.TYPES.HALLWAY: this.player.epitaph = "completely\n missing the entire hallway."; break;
+		case MapBuilder.TYPES.CRANE: this.player.epitaph = "\n missing a crane completely."; break;
+		case MapBuilder.TYPES.BILLBOARD: this.player.epitaph = "not\nquite reaching a billboard."; break;
+		case MapBuilder.TYPES.LEG: this.player.epitaph = "landing\nwhere a building used to be."; break;
+		default: this.player.epitaph = "\nfalling to your death."
 	} else switch (i) {
-		case MapBuilder.TYPES.HALLWAY:
-			this.player.epitaph = "\nfalling out of a hallway.";
-			break;
-		case MapBuilder.TYPES.COLLAPSE:
-			this.player.epitaph = "riding\na falling building all the way down.";
-			break;
-		case MapBuilder.TYPES.BOMB:
-			this.player.epitaph = "dodging\n a bomb only to miss the next roof.";
-			break;
-		case MapBuilder.TYPES.CRANE:
-			this.player.epitaph = "\nfalling off a crane.";
-			break;
-		case MapBuilder.TYPES.BILLBOARD:
-			this.player.epitaph = "\nstumbling off the edge of a billboard.";
-			break;
-		case MapBuilder.TYPES.LEG:
-			this.player.epitaph = "jumping\nclear over...something.";
-			break;
-		default:
-			this.player.epitaph = "\nfalling to your death."
+		case MapBuilder.TYPES.HALLWAY: this.player.epitaph = "\nfalling out of a hallway."; break;
+		case MapBuilder.TYPES.COLLAPSE: this.player.epitaph = "riding\na falling building all the way down."; break;
+		case MapBuilder.TYPES.BOMB: this.player.epitaph = "dodging\n a bomb only to miss the next roof."; break;
+		case MapBuilder.TYPES.CRANE: this.player.epitaph = "\nfalling off a crane."; break;
+		case MapBuilder.TYPES.BILLBOARD: this.player.epitaph = "\nstumbling off the edge of a billboard."; break;
+		case MapBuilder.TYPES.LEG: this.player.epitaph = "jumping\nclear over...something."; break;
+		default: this.player.epitaph = "\nfalling to your death."
 	}
 };
 
