@@ -204,36 +204,47 @@ MovieObjectPool.prototype.createMovie = function(n, t) {
 
 
 function GraphicObjectPool() {
-	ObjectPool.call(this)
+	ObjectPool.call(this);
 }
+
 GraphicObjectPool.prototype.constructor = GraphicObjectPool;
 
 GraphicObjectPool.prototype = Object.create(ObjectPool.prototype);
 
 GraphicObjectPool.prototype.createObjectPool = function() {
-	ObjectPool.prototype.createObjectPool.call(this),
-	this.createGraphicObject(15, this.createGlassWindowGraphic, SliceType.GLASSWINDOW),
-	this.createGraphicObject(500, this.createHallGraphic, SliceType.HALL3)
-};
+	ObjectPool.prototype.createObjectPool.call(this);
+	this.createGraphicObject(15, this.createGlassWindowGraphic, SliceType.GLASSWINDOW);
+	this.createGraphicObject(500, this.createHallGraphic, SliceType.HALL3);
+}
+
 GraphicObjectPool.prototype.createGraphicObject = function(n, t, i) {
-	this.containerLookup[i] = [], this.addGraphics(n, i, t, this.containerLookup[i])
-};
+	this.containerLookup[i] = [];
+	this.addGraphics(n, i, t, this.containerLookup[i]);
+}
+
 GraphicObjectPool.prototype.addGraphics = function(n, t, i, r) {
-	for (var f, u = 0; u < n; u++) f = i(t), r.push(f)
-};
+	for (var f, u = 0; u < n; u++) f = i(t), r.push(f);
+}
+
 GraphicObjectPool.prototype.createHallGraphic = function() {
 	var n = new PIXI.Graphics;
-	return n.lineStyle(WallSlice.WIDTH, 0x35353d, 1), n.moveTo(0, 0), n.lineTo(0, WallSlice.HEIGHT + 1), n
-};
+	return n.lineStyle(WallSlice.WIDTH, 0x35353d, 1), n.moveTo(0, 0), n.lineTo(0, WallSlice.HEIGHT + 1), n;
+}
+
 GraphicObjectPool.prototype.createGlassWindowGraphic = function() {
 	var n = new PIXI.Graphics;
-	return n.lineStyle(GlassWindow.WIDTH, 0xffffff, 1), n.moveTo(0, 0), n.lineTo(0, WallSlice.HEIGHT), n
-};
+	return n.lineStyle(GlassWindow.WIDTH, 0xffffff, 1), n.moveTo(0, 0), n.lineTo(0, WallSlice.HEIGHT), n;
+}
+
 
 
 
 function SpriteEmitter(n) {
-	PIXI.DisplayObjectContainer.call(this), this.members = [], this.timer = 0, this.counter = 0;
+	PIXI.DisplayObjectContainer.call(this);
+	this.members = [];
+	this.timer = 0;
+	this.counter = 0;
+	
 	var t = {
 		minParticleSpeed: {
 			x: -100,
@@ -249,30 +260,37 @@ function SpriteEmitter(n) {
 		delay: .1,
 		quantity: 0
 	};
-	extend(this, t, n)
+	extend(this, t, n);
 }
 
-SpriteEmitter.constructor = SpriteEmitter,
-SpriteEmitter.prototype = Object.create(PIXI.DisplayObjectContainer.prototype),
+SpriteEmitter.constructor = SpriteEmitter;
+
+SpriteEmitter.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+
 SpriteEmitter.prototype.start = function() {
-	this.counter = 0
-};
+	this.counter = 0;
+}
+
 SpriteEmitter.prototype.update = function() {
-	this.updateMembers(), this.updateEmitter()
-};
+	this.updateMembers();
+	this.updateEmitter();
+}
+
 SpriteEmitter.prototype.updateEmitter = function() {
 	for (this.timer += GameGlobal.TimeKeeper.elapsedSec; this.timer > this.delay && this.counter < this.quantity;) this.timer -= this.delay, this.emitParticle()
-};
+}
+
 SpriteEmitter.prototype.updateMembers = function() {
 	for (var n = 0; n < this.counter; n++) this.members[n].update(), this.members[n].render()
-};
+}
+
 SpriteEmitter.prototype.emitParticle = function() {
 	var n = this.members[this.counter];
 	n.physics.position.x = 0, n.physics.position.y = 0, n.physics.velocity = {
 		x: this.minParticleSpeed.x + Math.random() * (this.maxParticleSpeed.x - this.minParticleSpeed.x),
 		y: this.minParticleSpeed.y + Math.random() * (this.maxParticleSpeed.y - this.minParticleSpeed.y)
 	}, n.physics.acceleration.y = this.gravity, n.physics.angularVelocity = this.minRotation + Math.random() * this.maxRotation - this.minRotation, this.counter++
-};
+}
 
 
 function GibEmitter(n) {
@@ -280,7 +298,9 @@ function GibEmitter(n) {
 	this.initWithGibCount(n.quantity);
 }
 
-GibEmitter.constructor = GibEmitter, GibEmitter.prototype = Object.create(SpriteEmitter.prototype), GibEmitter.prototype.initWithGibCount = function(n) {
+GibEmitter.constructor = GibEmitter;
+GibEmitter.prototype = Object.create(SpriteEmitter.prototype);
+GibEmitter.prototype.initWithGibCount = function(n) {
 	for (var i, t = 0; t < n; t++) i = new ScrollSprite(GameGlobal.PoolKeeper.borrowWallSprite(SliceType.GIBS + Util.random(5)), new ObjectPhysics), this.members.push(i), this.addChild(i.sprite)
 }
 
@@ -313,9 +333,17 @@ function TimeKeeper() {
 }
 
 function ScreenFocus() {
-	this.followTarget = null, this.followMin = null, this.followMax = null, this.scroll = null, this.width = 0, this.height = 0, this.setFocusData = function(n, t) {
-		this.width = n, this.height = t
-	}, this.follow = function(n) {
+	this.followTarget = null,
+	this.followMin = null,
+	this.followMax = null,
+	this.scroll = null,
+	this.width = 0,
+	this.height = 0,
+	this.setFocusData = function(n, t) {
+		this.width = n,
+		this.height = t
+	}, 
+	this.follow = function(n) {
 		this.followTarget = n;
 		var t = {
 			x: this.width / 2 - this.followTarget.x,
@@ -324,16 +352,21 @@ function ScreenFocus() {
 		this.scroll = {
 			x: t.x,
 			y: t.y
-		}, this.doFollow()
-	}, this.followBounds = function(n, t, i, r) {
+		},
+		this.doFollow()
+	},
+	this.followBounds = function(n, t, i, r) {
 		this.followMin = {
 			x: -n,
 			y: -t
-		}, this.followMax = {
+		},
+		this.followMax = {
 			x: -i + this.width,
 			y: -r + this.height
-		}, this.followMax.x > this.followMin.x && (this.followMax.x = this.followMin.x), this.followMax.y > this.followMin.y && (this.followMax.y = this.followMin.y), this.doFollow()
-	}, this.doFollow = function() {
+		},
+		this.followMax.x > this.followMin.x && (this.followMax.x = this.followMin.x), this.followMax.y > this.followMin.y && (this.followMax.y = this.followMin.y), this.doFollow()
+	},
+	this.doFollow = function() {
 		if (this.followTarget !== null) {
 			var n = {
 				x: this.width / 2 - this.followTarget.x,
@@ -342,7 +375,8 @@ function ScreenFocus() {
 			this.scroll.x += (n.x - this.scroll.x) * 15 * GameGlobal.TimeKeeper.elapsedSec,
 			this.scroll.y += (n.y - this.scroll.y) * 15 * GameGlobal.TimeKeeper.elapsedSec
 		}
-		this.followMin != null && (this.scroll.x = Math.min(this.scroll.x, this.followMin.x), this.scroll.y = Math.min(this.scroll.y, this.followMin.y)), this.followMax != null && (this.scroll.x = Math.max(this.scroll.x, this.followMax.x), this.scroll.y = Math.max(this.scroll.y, this.followMax.y))
+		this.followMin != null && (this.scroll.x = Math.min(this.scroll.x, this.followMin.x), this.scroll.y = Math.min(this.scroll.y, this.followMin.y)),
+		this.followMax != null && (this.scroll.x = Math.max(this.scroll.x, this.followMax.x), this.scroll.y = Math.max(this.scroll.y, this.followMax.y))
 	}
 }
 
@@ -361,16 +395,24 @@ function ScreenQuake() {
 		y: 0
 	},
 	this.initWithScreenData = function(n, t, i) {
-		this.zoom = n, this.width = t, this.height = i
+		this.zoom = n,
+		this.width = t,
+		this.height = i
 	},
 	this.setScale = function(n, t) {
-		this.scale.x = n, this.scale.y = t
+		this.scale.x = n,
+		this.scale.y = t
 	},
 	this.startWithIntensity = function(n, t) {
-		this.stop(), this.intensity = n, this.timer = t
+		this.stop(),
+		this.intensity = n,
+		this.timer = t
 	},
 	this.stop = function() {
-		this.pos.x = 0, this.pos.y = 0, this.intensity = 0, this.timer = 0
+		this.pos.x = 0,
+		this.pos.y = 0,
+		this.intensity = 0,
+		this.timer = 0
 	},
 	this.update = function() {
 		this.timer > 0 && (this.timer -= GameGlobal.TimeKeeper.elapsedSec, this.timer <= 0 ? (this.timer = 0, this.pos.x = 0, this.pos.y = 0) : (this.pos.x = (Math.random() * this.intensity * this.width * 2 - this.intensity * this.width) * this.zoom * this.scale.x, this.pos.y = (Math.random() * this.intensity * this.height * 2 - this.intensity * this.height) * this.zoom * this.scale.y))
@@ -409,7 +451,9 @@ function SoundPlayer() {
 }
 
 function WallSlice(n, t, i) {
-	this.type = n, this.y = t, this.sprite = null;
+	this.type = n,
+	this.y = t,
+	this.sprite = null;
 	var r = {
 		width: WallSlice.WIDTH,
 		offsetX: 0,
@@ -422,17 +466,30 @@ function WallSlice(n, t, i) {
 			y: 0
 		}
 	};
-	i = i || r, this.options = extend({}, r, i), this.width = this.options.width, this.offsetX = this.options.offsetX, this.scale = this.options.scale, this.anchor = this.options.anchor
+	i = i || r,
+	this.options = extend({}, r, i),
+	this.width = this.options.width,
+	this.offsetX = this.options.offsetX,
+	this.scale = this.options.scale,
+	this.anchor = this.options.anchor
 }
 
 function SliceType() {}
 
 function CollapseSlice(n, t, i) {
-	WallSlice.call(this, n, t, i), this.collapseObject = i.collapseObject, this.collapsePhysics = this.collapseObject.physics, this.collapseObject.physicsLock = !0, this.haveLock = !1, this.go = !1
+	WallSlice.call(this, n, t, i),
+	this.collapseObject = i.collapseObject,
+	this.collapsePhysics = this.collapseObject.physics,
+	this.collapseObject.physicsLock = !0,
+	this.haveLock = !1,
+	this.go = !1
 }
 
 function GibSlice(n, t, i) {
-	CollapseSlice.call(this, n, t, i), this.appearTime = Util.random(20, 10), this.animationTime = Util.random(70, 20), this.objectPhysics = new ObjectPhysics({
+	CollapseSlice.call(this, n, t, i),
+	this.appearTime = Util.random(20, 10),
+	this.animationTime = Util.random(70, 20),
+	this.objectPhysics = new ObjectPhysics({
 		velocity: {
 			x: -200 + Math.random() * 400,
 			y: -120 + Math.random() * 120
@@ -446,12 +503,20 @@ function GibSlice(n, t, i) {
 }
 
 function PigeonGroup(n) {
-	this.y = n, this.amount = Util.random(10, 2), this.container = new PIXI.DisplayObjectContainer, this.sprite = null, this.pigeons = [], this.flyOffTimer = Util.random(10);
+	this.y = n,
+	this.amount = Util.random(10, 2),
+	this.container = new PIXI.DisplayObjectContainer,
+	this.sprite = null,
+	this.pigeons = [],
+	this.flyOffTimer = Util.random(10);
 	for (var t = 0; t < this.amount; t++) this.pigeons.push(new Pigeon(this.y))
 }
 
 function Pigeon(n) {
-	this.type = SliceType.PIGEON, this.flaps = ["flap1", "flap2", "flap3", ""], this.sprite = null, this.objectPhysics = new ObjectPhysics({
+	this.type = SliceType.PIGEON,
+	this.flaps = ["flap1", "flap2", "flap3", ""],
+	this.sprite = null,
+	this.objectPhysics = new ObjectPhysics({
 		position: {
 			x: Util.random(PigeonGroup.WIDTH),
 			y: n
@@ -464,39 +529,64 @@ function Pigeon(n) {
 			x: Util.random(200),
 			y: -50 - Util.random(300)
 		}
-	}), this.flipped = Math.random() < .5, this.flipped || (this.objectPhysics.acceleration.x *= -1)
+	}),
+	this.flipped = Math.random() < .5,
+	this.flipped || (this.objectPhysics.acceleration.x *= -1)
 }
 
 function Shard(n) {
-	this.type = SliceType.GLASS + n, this.sprite = GameGlobal.PoolKeeper.borrowWallSprite(this.type), this.sprite.scale.x = WallSlice.SCALE, this.sprite.scale.y = WallSlice.SCALE, this.sprite.anchor = {
+	this.type = SliceType.GLASS + n,
+	this.sprite = GameGlobal.PoolKeeper.borrowWallSprite(this.type),
+	this.sprite.scale.x = WallSlice.SCALE,
+	this.sprite.scale.y = WallSlice.SCALE,
+	this.sprite.anchor = {
 		x: .5,
 		y: .5
-	}, this.t = 1 + Util.random(6), this.shardSounds = ["glass1", "glass2", ""]
+	},
+	this.t = 1 + Util.random(6),
+	this.shardSounds = ["glass1", "glass2", ""]
 }
 
 function ShardsAsset() {
-	PIXI.DisplayObjectContainer.call(this), this.shards = [], this.shattered = 0, this.animationTime = 500, this.setViewportX = function(n, t) {
-		this.viewportX = n, this.viewportY = t, this.update()
-	}, this.addShards(), this.initShards(0, 0, {
+	PIXI.DisplayObjectContainer.call(this),
+	this.shards = [],
+	this.shattered = 0,
+	this.animationTime = 500,
+	this.setViewportX = function(n, t) {
+		this.viewportX = n,
+		this.viewportY = t,
+		this.update()
+	},
+	this.addShards(),
+	this.initShards(0, 0, {
 		x: 0,
 		y: 0
 	})
 }
 
 function GlassWindow(n, t, i) {
-	this.type = SliceType.GLASSWINDOW, GraphicSlice.call(this, n, t, this.type), this.shardAsset = i
+	this.type = SliceType.GLASSWINDOW,
+	GraphicSlice.call(this, n, t, this.type),
+	this.shardAsset = i
 }
 
 function Hall3Slice(n, t) {
-	this.type = SliceType.HALL3, GraphicSlice.call(this, n, WallSlice.WIDTH / 2, this.type), this.hallUp = t || !1
+	this.type = SliceType.HALL3,
+	GraphicSlice.call(this, n, WallSlice.WIDTH / 2, this.type),
+	this.hallUp = t || !1
 }
 
 function GraphicSlice(n, t, i) {
-	this.type = i, this.y = n, this.offsetX = t, this.sprite = null
+	this.type = i,
+	this.y = n,
+	this.offsetX = t,
+	this.sprite = null
 }
 
 function ObstacleSlice(n, t, i) {
-	WallSlice.call(this, n, t, i), this.stumble = !1, this.stumblePhysics = new ObjectPhysics({
+	WallSlice.call(this, n, t, i),
+	this.stumble = !1,
+	this.stumblePhysics = new ObjectPhysics({
 		velocity: {
 			x: 0,
 			y: -120
@@ -522,39 +612,62 @@ function Smoke() {
 			y: -15 + 30 * Math.random()
 		},
 		angularVelocity: -.08 + .16 * Math.random()
-	}), this.scrollSprite = new ScrollSprite(n, this.objectPhysics), this.scrollSprite.scrollFactor = {
+	}),
+	this.scrollSprite = new ScrollSprite(n, this.objectPhysics),
+	this.scrollSprite.scrollFactor = {
 		x: .1,
 		y: .05
 	}
 }
 
 function SmokeEmitter() {
-	PIXI.DisplayObjectContainer.call(this), this.smokes = [], this.addSmokes()
+	PIXI.DisplayObjectContainer.call(this),
+	this.smokes = [],
+	this.addSmokes()
 }
 
 function Walker(n) {
-	this.type = SliceType.WALKER, this.firing = !1, this.walkTimer = 0, this.idleTimer = 0, this.objectPhysics = new ObjectPhysics({
+	this.type = SliceType.WALKER,
+	this.firing = !1,
+	this.walkTimer = 0,
+	this.idleTimer = 0,
+	this.objectPhysics = new ObjectPhysics({
 		position: {
 			x: -500,
 			y: 40 + Math.random() * 10
 		}
-	}), this.smokesObject = n, this.animation = new ScrollAnimation("raw/walker{0}.png"), this.animation.addAnimation("idle", [1], 1, !1), this.animation.addAnimation("walk", [1, 2, 3, 4, 5, 6], .1, !0), this.animation.addAnimation("fire", [7, 8, 9, 10, 11, 12], .05, !1), this.animation.play("idle");
+	}),
+	this.smokesObject = n,
+	this.animation = new ScrollAnimation("raw/walker{0}.png"),
+	this.animation.addAnimation("idle", [1], 1, !1),
+	this.animation.addAnimation("walk", [1, 2, 3, 4, 5, 6], .1, !0),
+	this.animation.addAnimation("fire", [7, 8, 9, 10, 11, 12], .05, !1),
+	this.animation.play("idle");
 	var t = this.animation.clip;
-	this.scrollSprite = new ScrollSprite(t, this.objectPhysics), this.scrollSprite.scrollFactor = {
+	this.scrollSprite = new ScrollSprite(t, this.objectPhysics),
+	this.scrollSprite.scrollFactor = {
 		x: .1,
 		y: .15
 	}
 }
 
 function ScrollWalker() {
-	PIXI.DisplayObjectContainer.call(this), this.walkerCap = 3, this.walkers = [], this.smokesObject = {
+	PIXI.DisplayObjectContainer.call(this),
+	this.walkerCap = 3,
+	this.walkers = [],
+	this.smokesObject = {
 		smokes: [],
 		s: 0
-	}, this.addSmokes(), this.addWalkers()
+	},
+	this.addSmokes(),
+	this.addWalkers()
 }
 
 function Jet() {
-	this.type = SliceType.JET, this.timer = 0, this.limit = 12 + Math.random() * 4, this.objectPhysics = new ObjectPhysics({
+	this.type = SliceType.JET,
+	this.timer = 0,
+	this.limit = 12 + Math.random() * 4,
+	this.objectPhysics = new ObjectPhysics({
 		position: {
 			x: -500,
 			y: 0
@@ -565,14 +678,19 @@ function Jet() {
 		}
 	});
 	var n = GameGlobal.PoolKeeper.borrowWallSprite(this.type);
-	this.scrollSprite = new ScrollSprite(n, this.objectPhysics), this.scrollSprite.scrollFactor = {
+	this.scrollSprite = new ScrollSprite(n, this.objectPhysics),
+	this.scrollSprite.scrollFactor = {
 		x: 0,
 		y: .3
 	}
 }
 
 function BombSlice(n, t, i) {
-	this.type = SliceType.BOMB, this.p = t, this.e = i, this.myY = n - 50, this.objectPhysics = new ObjectPhysics({
+	this.type = SliceType.BOMB,
+	this.p = t,
+	this.e = i,
+	this.myY = n - 50,
+	this.objectPhysics = new ObjectPhysics({
 		position: {
 			x: 0,
 			y: -80
@@ -581,19 +699,26 @@ function BombSlice(n, t, i) {
 			x: 0,
 			y: 1200
 		}
-	}), this.sprite = null, this.container = new PIXI.DisplayObjectContainer
+	}),
+	this.sprite = null,
+	this.container = new PIXI.DisplayObjectContainer
 }
 
 function BombTriggerSlice() {
-	this.type = SliceType.GAP, this.sprite = undefined
+	this.type = SliceType.GAP,
+	this.sprite = undefined
 }
 
 function DecoratorInfo(n, t, i) {
-	this.height = n, this.length = t, this.startOffset = i
+	this.height = n,
+	this.length = t,
+	this.startOffset = i
 }
 
 function MapDecorator(n) {
-	this.layerIndex = 0, this.layers = [], this.chances = n || {
+	this.layerIndex = 0,
+	this.layers = [],
+	this.chances = n || {
 		slope: .2,
 		pipe1: .35 / 15,
 		pipe2: .35 / 10,
@@ -602,11 +727,24 @@ function MapDecorator(n) {
 		ac: .3 / 5,
 		access: .25 / 15,
 		skylight: .5 / 15
-	}, this.addAC = !0, this.addFence = .4, this.addSlope = !0, this.addPipes = !0, this.addConstruction = .5
+	},
+	this.addAC = !0,
+	this.addFence = .4,
+	this.addSlope = !0,
+	this.addPipes = !0,
+	this.addConstruction = .5
 }
 
 function MapBuilder(n, t, i, r, u, f, e) {
-	this.player = n, this.walls = t, this.pigeons = i, this.shards = r, this.obstacles = u, this.decorations = f, this.gibEmitter = e, this.decorator = new MapDecorator, this.seq = {
+	this.player = n,
+	this.walls = t,
+	this.pigeons = i,
+	this.shards = r,
+	this.obstacles = u,
+	this.decorations = f,
+	this.gibEmitter = e,
+	this.decorator = new MapDecorator,
+	this.seq = {
 		currIndex: 0
 	}
 }
@@ -616,15 +754,24 @@ function ScrollMovie(n) {
 }
 
 function ScrollSprite(n, t) {
-	t = t || new ObjectPhysics({}), this.sprite = n, this.scrollFactor = {
+	t = t || new ObjectPhysics({}),
+	this.sprite = n,
+	this.scrollFactor = {
 		x: 1,
 		y: 1
-	}, this.physics = t, this.translateSprite = function(n, t) {
-		this.physics.position.x = n - GameGlobal.ScreenFocus.scroll.x * this.scrollFactor.x, this.physics.position.y = t - GameGlobal.ScreenFocus.scroll.y * this.scrollFactor.y, this.render()
-	}, this.render = function() {
+	},
+	this.physics = t,
+	this.translateSprite = function(n, t) {
+		this.physics.position.x = n - GameGlobal.ScreenFocus.scroll.x * this.scrollFactor.x,
+		this.physics.position.y = t - GameGlobal.ScreenFocus.scroll.y * this.scrollFactor.y,
+		this.render()
+	},
+	this.render = function() {
 		var n = this.getScreenXY();
-		this.sprite.position.x = n.x, this.sprite.position.y = n.y
-	}, this.getScreenXY = function() {
+		this.sprite.position.x = n.x,
+		this.sprite.position.y = n.y
+	},
+	this.getScreenXY = function() {
 		return {
 			x: this.physics.position.x + GameGlobal.ScreenFocus.scroll.x * this.scrollFactor.x,
 			y: this.physics.position.y + GameGlobal.ScreenFocus.scroll.y * this.scrollFactor.y
@@ -633,23 +780,50 @@ function ScrollSprite(n, t) {
 }
 
 function ScrollAnimation(n) {
-	this.clip = null, this.texture = n, this.frames = []
+	this.clip = null,
+	this.texture = n,
+	this.frames = []
 }
 
 function ScrollForeground(n, t) {
-	PIXI.DisplayObjectContainer.call(this), this.slices = [], this.viewportX = 0, this.viewportY = 0, this.viewportSliceX = 0, this.SLICE_WIDTH = n, this.SCREEN_WIDTH = t, this.VIEWPORT_NUM_SLICES = Math.ceil(ScrollForeground.VIEWPORT_WIDTH / this.SCREEN_WIDTH) + 1, this.setViewportX = function(n, t) {
-		this.viewportX = this.checkViewportXBounds(n), this.viewportY = t;
+	PIXI.DisplayObjectContainer.call(this),
+	this.slices = [],
+	this.viewportX = 0,
+	this.viewportY = 0,
+	this.viewportSliceX = 0,
+	this.SLICE_WIDTH = n,
+	this.SCREEN_WIDTH = t,
+	this.VIEWPORT_NUM_SLICES = Math.ceil(ScrollForeground.VIEWPORT_WIDTH / this.SCREEN_WIDTH) + 1,
+	this.setViewportX = function(n, t) {
+		this.viewportX = this.checkViewportXBounds(n),
+		this.viewportY = t;
 		var i = this.viewportSliceX;
-		this.viewportSliceX = Math.floor(this.viewportX / this.SLICE_WIDTH), this.removeOldSlices(i), this.addNewSlices()
+		this.viewportSliceX = Math.floor(this.viewportX / this.SLICE_WIDTH),
+		this.removeOldSlices(i),
+		this.addNewSlices()
 	}
 }
 
 function ScrollBackground(n, t, i, r) {
 	r = r || 0;
 	var u = PIXI.Texture.fromFrame(n);
-	PIXI.TilingSprite.call(this, u, 1024, 256), this.position.x = 0, this.position.y = 0, this.tilePosition.x = 0, this.tilePosition.y = 0, this.scale.x = WallSlice.SCALE, this.scale.y = WallSlice.SCALE, this.DELTA_X = t, this.DELTA_Y = i, this.offsetY = r, this.viewportX = 0, this.update = function() {}, this.setViewportX = function(n, t) {
+	PIXI.TilingSprite.call(this, u, 1024, 256),
+	this.position.x = 0,
+	this.position.y = 0,
+	this.tilePosition.x = 0,
+	this.tilePosition.y = 0,
+	this.scale.x = WallSlice.SCALE,
+	this.scale.y = WallSlice.SCALE,
+	this.DELTA_X = t,
+	this.DELTA_Y = i,
+	this.offsetY = r,
+	this.viewportX = 0,
+	this.update = function() {},
+	this.setViewportX = function(n, t) {
 		var i = n - this.viewportX;
-		this.viewportX = n, this.tilePosition.x += i * this.DELTA_X, this.position.y = this.offsetY + Math.floor(t * this.DELTA_Y)
+		this.viewportX = n,
+		this.tilePosition.x += i * this.DELTA_X,
+		this.position.y = this.offsetY + Math.floor(t * this.DELTA_Y)
 	}
 }
 
@@ -699,49 +873,16 @@ function HUD(n, t, i) {
 	this.buildTextures(),
 	this.sprites = [],
 	this.buildSprites(),
-	this.position = {
-		x: n,
-		y: t
-	}
+	this.position = { x: n, y: t };
 }
 
 function GameOver(n, t, i, r) {
-	var e, u, o, h, f, s;
-	PIXI.DisplayObjectContainer.call(this),
-	e = 20,
-	u = new PIXI.Graphics,
-	u.beginFill(0x35363c),
-	u.drawRect(0, e + 54, n, 54),
-	u.beginFill(0x35363c),
-	u.drawRect(0, t - 35, n, 30),
-	this.addChild(u),
-	o = new PIXI.Sprite.fromFrame("raw/gameover.png"),
-	o.x = Math.floor((n - 390) / 2),
-	o.y = e,
-	this.addChild(o),
-	h = Util.format("You ran {0}m before ", i) + r.epitaph,
-	f = new PIXI.Text(h, {
-		font: "16px Flixel",
-		fill: "#ffffff",
-		align: "center",
-		wordWrap: true,
-		wordWrapWidth: n
-	}),
-	// f.x = Math.floor((n - 330) / 2),
-	f.x = 65,
-	f.y = e + 60,
-	f.width = n,
-	f.scale.x = 1,
-	f.scale.y = 1,
-	this.addChild(f),
-	s = new PIXI.Text("Jump to retry your daring escape.", {
-		font: "16px Flixel",
-		fill: "#ffffff",
-		align: "left"
-	}),
-	s.x = 65,
-	s.y = t - 27,
-	this.addChild(s),
+	PIXI.DisplayObjectContainer.call(this);
+	// Game over message
+	let str = `You ran ${i}m before ${r.epitaph}`;
+	APP.content.find(".game-over .message").html(str);
+	// show game over screen
+	APP.content.addClass("game-over");
 	game_over = !0
 }
 
@@ -802,17 +943,8 @@ function PlayState(n, t, i) {
 	this.walkerLayer.scale.y = this.zoom, n.addChild(this.far), n.addChild(this.walkerLayer), n.addChild(this.mid), n.addChild(this.viewArea),
 	this.dist = new HUD(this.width - 85, 5, 80),
 	this.dist.setDistance(0), n.addChild(this.dist),
-	this.mapBuilder = new MapBuilder(this.player,
-		this.front,
-	this.pigeonLayer,
-	this.shardLayer,
-	this.obstacleLayer,
-	this.decorationLayer,
-	this.gibEmitter),
-	this.focus = {
-		x: 0,
-		y: 0
-	},
+	this.mapBuilder = new MapBuilder(this.player, this.front, this.pigeonLayer, this.shardLayer, this.obstacleLayer, this.decorationLayer, this.gibEmitter),
+	this.focus = { x: 0, y: 0 },
 	GameGlobal.ScreenFocus.follow(this.focus),
 	GameGlobal.ScreenFocus.followBounds(0, 0, Number.POSITIVE_INFINITY, this.height),
 	GameGlobal.ScreenQuake.startWithIntensity(.007, 3.1),
@@ -839,15 +971,18 @@ WallSlice.prototype.initDisplay = function(n, t, i) {
 	this.sprite.anchor = this.anchor,
 	this.sprite.position.x = n + t * WallSlice.WIDTH + this.offsetX,
 	this.sprite.position.y = this.y + i
-},
+}
+
 WallSlice.prototype.updateDisplay = function(n, t, i) {
 	this.sprite.position.x = n + t * WallSlice.WIDTH + this.offsetX,
 	this.sprite.position.y = this.y + i
-},
+}
+
 WallSlice.prototype.removeDisplay = function() {
 	GameGlobal.PoolKeeper.returnWallSprite(this.type, this.sprite),
 	this.sprite = null
-},
+}
+
 WallSlice.prototype.checkCollision = function(n, t) {
 	var f = this.type < SliceType.WALL_RIGHT,
 		e = this.type >= SliceType.FLOOR_LEFT && this.type <= SliceType.FLOOR_RIGHT + 2,
@@ -857,7 +992,8 @@ WallSlice.prototype.checkCollision = function(n, t) {
 	(f || e || u || r) && (n.position.y >= this.sprite.position.y - n.height && n.position.y <= this.sprite.position.y + this.sprite.height && (i = n.position.x - this.sprite.position.x, i > 0 && i < this.width && (r ? n.hitLeft(this.sprite.position.x - n.width + 5) : n.hitBottom(this.sprite.position.y - n.height), u && (n.craneFeet = !0))), t && t.animationTime > 0 && t.shards.forEach(function(n) {
 		n.sprite.position.y > this.sprite.position.y - n.sprite.height / 10 && (i = n.sprite.position.x - this.sprite.position.x, i > 0 && i < this.width && (r || n.hitBottom(this.sprite.position.y - n.sprite.height / 10)))
 	}, this))
-},
+}
+
 WallSlice.SCALE = 1,
 WallSlice.WIDTH = 16 * WallSlice.SCALE,
 WallSlice.HEIGHT = 16 * WallSlice.SCALE,
@@ -971,7 +1107,9 @@ CollapseSlice.prototype.checkCollision = function(n, t) {
 		}
 	}, this)
 },
-GibSlice.constructor = GibSlice, GibSlice.prototype = Object.create(CollapseSlice.prototype), GibSlice.prototype.initDisplay = function(n, t, i) {
+GibSlice.constructor = GibSlice,
+GibSlice.prototype = Object.create(CollapseSlice.prototype),
+GibSlice.prototype.initDisplay = function(n, t, i) {
 	CollapseSlice.prototype.initDisplay.call(this, n, t, i), this.sprite.anchor = {
 		x: .5,
 		y: .5
@@ -983,7 +1121,11 @@ GibSlice.prototype.updateDisplay = function(n, t, i) {
 	this.sprite.position.x += this.objectPhysics.position.x,
 	this.sprite.position.y += this.objectPhysics.position.y,
 	this.sprite.rotation = this.objectPhysics.rotation,
-	--this.appearTime < 0 && (this.objectPhysics.update(), this.sprite.alpha = 1, --this.animationTime < 0 && (this.sprite.alpha = 0))
+	--this.appearTime < 0 && (
+		this.objectPhysics.update(),
+		this.sprite.alpha = 1,
+		--this.animationTime < 0 && (this.sprite.alpha = 0)
+	)
 },
 GibSlice.prototype.checkCollision = function() {},
 PigeonGroup.prototype.initDisplay = function(n, t, i) {
@@ -1043,6 +1185,7 @@ Pigeon.prototype.removeDisplay = function() {
 Pigeon.SCALE = 1,
 Pigeon.HEIGHT = 10 * Pigeon.SCALE,
 Pigeon.WIDTH = 10 * Pigeon.SCALE,
+
 Shard.prototype.init = function(n, t, i) {
 	this.objectPhysics = new ObjectPhysics({
 		position: {
@@ -1148,7 +1291,14 @@ ObstacleSlice.prototype.initDisplay = function(n, t, i) {
 	}
 },
 ObstacleSlice.prototype.updateDisplay = function(n, t, i) {
-	WallSlice.prototype.updateDisplay.call(this, n, t, i), this.stumble && (this.stumblePhysics.update(), this.sprite.rotation = this.stumblePhysics.rotation, this.sprite.position.x += this.stumblePhysics.position.x, this.sprite.position.y += this.stumblePhysics.position.y, this.sprite.alpha++, this.sprite.alpha %= 2)
+	WallSlice.prototype.updateDisplay.call(this, n, t, i),
+	this.stumble && (
+		this.stumblePhysics.update(),
+		this.sprite.rotation = this.stumblePhysics.rotation,
+		this.sprite.position.x += this.stumblePhysics.position.x,
+		this.sprite.position.y += this.stumblePhysics.position.y,
+		this.sprite.alpha++,
+		this.sprite.alpha %= 2)
 },
 ObstacleSlice.prototype.checkCollision = function(n) {
 	var t, i;
@@ -1174,7 +1324,9 @@ Smoke.prototype.removeSprite = function() {
 	var n = this.scrollSprite.sprite;
 	GameGlobal.PoolKeeper.returnWallSprite(n)
 },
-SmokeEmitter.constructor = SmokeEmitter, SmokeEmitter.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), SmokeEmitter.prototype.reset = function(n, t) {
+SmokeEmitter.constructor = SmokeEmitter,
+SmokeEmitter.prototype = Object.create(PIXI.DisplayObjectContainer.prototype),
+SmokeEmitter.prototype.reset = function(n, t) {
 	var i, r;
 	for (this.position.x = n, this.position.y = t, i = 0; i < this.smokes.length; i++) r = this.smokes[i], r.objectPhysics.position.x = 0, r.objectPhysics.position.y = 0
 },
@@ -1209,21 +1361,38 @@ Walker.prototype.remove = function() {
 	var n = this.scrollSprite.sprite;
 	GameGlobal.PoolKeeper.returnMovieSprite(n)
 },
-ScrollWalker.constructor = ScrollWalker, ScrollWalker.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), ScrollWalker.prototype.update = function() {
+ScrollWalker.constructor = ScrollWalker,
+ScrollWalker.prototype = Object.create(PIXI.DisplayObjectContainer.prototype),
+ScrollWalker.prototype.update = function() {
 	for (var t, i, n = 0; n < this.walkers.length; n++) t = this.walkers[n], t.update();
 	for (n = 0; n < this.smokesObject.smokes.length; n++) i = this.smokesObject.smokes[n], i.update()
 },
 ScrollWalker.prototype.addSmokes = function() {
-	for (var t, n = 0; n < 10; n++) t = new SmokeEmitter, this.smokesObject.smokes.push(t), this.addChild(t)
+	for (var t, n = 0; n < 10; n++)
+		t = new SmokeEmitter,
+	this.smokesObject.smokes.push(t),
+	this.addChild(t)
 },
 ScrollWalker.prototype.addWalkers = function() {
-	for (var t, n = 0; n < this.walkerCap; n++) t = new Walker(this.smokesObject), this.walkers.push(t), this.addChild(t.scrollSprite.sprite)
+	for (var t, n = 0; n < this.walkerCap; n++)
+		t = new Walker(this.smokesObject),
+	this.walkers.push(t),
+	this.addChild(t.scrollSprite.sprite)
 },
 Jet.prototype.jet = function() {
 	return this.scrollSprite.sprite
 },
 Jet.prototype.update = function() {
-	this.timer += GameGlobal.TimeKeeper.elapsedSec, this.timer > this.limit && (this.scrollSprite.translateSprite(960, -20 + Math.random() * 120), GameGlobal.ScreenQuake.startWithIntensity(.02, 1.5), GameGlobal.SoundPlayer.sound.play("flyby"), this.timer = 0, this.limit = 10 + Math.random() * 20), this.scrollSprite.sprite.position.x < -this.scrollSprite.sprite.width || (this.scrollSprite.update(), this.scrollSprite.render())
+	this.timer += GameGlobal.TimeKeeper.elapsedSec,
+	this.timer > this.limit && (
+		this.scrollSprite.translateSprite(960, -20 + Math.random() * 120),
+		GameGlobal.ScreenQuake.startWithIntensity(.02, 1.5),
+		GameGlobal.SoundPlayer.sound.play("flyby"),
+		this.timer = 0,
+		this.limit = 10 + Math.random() * 20),
+	this.scrollSprite.sprite.position.x < -this.scrollSprite.sprite.width || (
+		this.scrollSprite.update(),
+		this.scrollSprite.render())
 },
 BombSlice.prototype.initDisplay = function(n, t) {
 	var e = n + t * WallSlice.WIDTH - GameGlobal.ScreenFocus.scroll.x,
@@ -1232,8 +1401,11 @@ BombSlice.prototype.initDisplay = function(n, t) {
 	this.sprite = this.container
 },
 BombSlice.prototype.removeDisplay = function() {
-	this.container.removeChild(this.scrollSprite.sprite), GameGlobal.PoolKeeper.returnWallSprite(this.type, this.scrollSprite.sprite);
-	for (var n = 0; n < 6; n++) this.container.removeChild(this.en[n].sprite), GameGlobal.PoolKeeper.returnWallSprite(this.en[n].type, this.en[n].sprite);
+	this.container.removeChild(this.scrollSprite.sprite),
+	GameGlobal.PoolKeeper.returnWallSprite(this.type, this.scrollSprite.sprite);
+	for (var n = 0; n < 6; n++)
+		this.container.removeChild(this.en[n].sprite),
+	GameGlobal.PoolKeeper.returnWallSprite(this.en[n].type, this.en[n].sprite);
 	this.sprite = null
 },
 BombSlice.prototype.updateDisplay = function() {
@@ -1245,10 +1417,12 @@ BombSlice.prototype.updateDisplay = function() {
 		GameGlobal.SoundPlayer.sound.play("bomb_hit")
 	}
 },
-BombSlice.prototype.checkCollision = function() {}, BombTriggerSlice.prototype.updateDisplay = function() {
+BombSlice.prototype.checkCollision = function() {},
+BombTriggerSlice.prototype.updateDisplay = function() {
 	GameGlobal.SoundPlayer.sound.play("bomb_launch"), this.sprite = null
 },
-BombTriggerSlice.prototype.checkCollision = function() {}, MapDecorator.prototype.buildDecoration = function(n, t) {
+BombTriggerSlice.prototype.checkCollision = function() {},
+MapDecorator.prototype.buildDecoration = function(n, t) {
 	this.layerIndex = 0;
 	var i = new DecoratorInfo(n, t, 0);
 	this.addSlope && this.addSlopeLayer(i, Util.random(4)), this.addAC && (i.height -= WallSlice.AC_HEIGHT, this.addRandomLayer(SliceType.AC, i, !1, this.chances.ac), i.height += WallSlice.AC_HEIGHT), Math.random() < .5 ? (this.addPipes && this.addPipeLayer(i), Math.random() < this.addConstruction && this.addBigSpriteRandomLayer(i, SliceType.ANTENNA + Util.random(6, 1), WallSlice.ANTENNA_HEIGHT, WallSlice.ANTENNA_WIDTH, this.chances.antenna)) : (this.addReservoirLayer(i), Math.random() < this.addFence && (i.height -= WallSlice.FENCE_HEIGHT, this.addLayer(SliceType.FENCE, i, !0), i.height += WallSlice.FENCE_HEIGHT))
@@ -1725,10 +1899,21 @@ HUD.prototype.buildSprites = function() {
 HUD.prototype.buildTextures = function() {
 	for (var n = 0; n < 11; n++) this.textures[n] = PIXI.Texture.fromFrame("hud" + n + ".png")
 },
-game_over = !1, GameOver.constructor = GameOver, GameOver.prototype = Object.create(PIXI.DisplayObjectContainer.prototype), PlayState.prototype.update = function() {
+game_over = !1, GameOver.constructor = GameOver,
+GameOver.prototype = Object.create(PIXI.DisplayObjectContainer.prototype),
+PlayState.prototype.update = function() {
 	var t = this.player.dead,
 		n;
-	this.updateChildren(), this.dist.setDistance(Math.ceil(this.player.objectPhysics.position.x / 10)), this.player.dead && !t && (n = Math.round(this.player.objectPhysics.position.x / 10), this.updatePlayerEpitaph(n), this.gameOver = new GameOver(this.width / this.zoom, this.height / this.zoom, n, this.player), this.gameOver.scale.x = this.zoom, this.gameOver.scale.y = this.zoom, this.stage.addChild(this.gameOver))
+	this.updateChildren(),
+	this.dist.setDistance(Math.ceil(this.player.objectPhysics.position.x / 10)),
+	this.player.dead && !t && (
+		n = Math.round(this.player.objectPhysics.position.x / 10),
+		this.updatePlayerEpitaph(n),
+		this.gameOver = new GameOver(this.width / this.zoom, this.height / this.zoom, n, this.player),
+		this.gameOver.scale.x = this.zoom,
+		this.gameOver.scale.y = this.zoom,
+		this.stage.addChild(this.gameOver)
+	)
 },
 PlayState.prototype.updateChildren = function() {
 	this.mapBuilder.update(), GameGlobal.ScreenFocus.doFollow(), this.focus.x = this.player.objectPhysics.position.x + GameGlobal.ScreenFocus.width * .5 - WallSlice.WIDTH * this.zoom * 5, this.focus.y = this.player.objectPhysics.position.y + GameGlobal.ScreenFocus.height * .18, this.focus.x += GameGlobal.ScreenQuake.pos.x * 2, this.focus.y += GameGlobal.ScreenQuake.pos.y * 2, this.player.update();
@@ -1874,6 +2059,7 @@ Main.prototype.update = function(n) {
 };
 
 Main.prototype.restart = function() {
+	APP.content.removeClass("game-over");
 	game_over = !1;
 	for (var n = main.stage.children.length - 1; n >= 0; n--) {
 		main.stage.removeChild(main.stage.children[n]);

@@ -38,10 +38,11 @@ const canabalt = {
 				break;
 			// custom events
 			case "game-loaded":
-				Self.content.removeClass("loading").addClass("start-page");
+				Self.content.removeClass("loading")
+					// .addClass("paused");
+					.addClass("start-page");
 
-				setTimeout(() => Self.dispatch({ type: "start-game" }), 300);
-				
+				// setTimeout(() => Self.dispatch({ type: "start-game" }), 300);
 				// setTimeout(() => {
 				// 	main.scroller.player.position.y = 500;
 				// }, 500);

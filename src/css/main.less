@@ -11,39 +11,107 @@ content {
 	right: 0;
 	bottom: 0;
 	font-family:'Flixel';
+	color: #fff;
+	text-align: center;
 
 	&.loading {
 		.loader { display: block; }
-		.starter { display: none; }
 	}
 
 	&.start-page {
-		.loader { display: none; }
 		.starter { display: block; }
 	}
 
+	&.game-over {
+		.game-over { display: block; }
+	}
+
+	&.paused {
+		.paused { display: block; }
+	}
+
 	&.playing {
-		.loader,
-		.starter { display: none; }
+		
 	}
 
 	.loader,
 	.starter {
+		display: none;
 		background: url(~/img/title-bg.jpg);
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
-		text-align: center;
 		text-shadow: 0 0 17px rgba(0,0,0,.35);
-		color: #fff;
 		padding-top: 323px;
 
 		h2 {
 			text-transform: uppercase;
 			font-size: 30px;
 			font-weight: 400;
+		}
+	}
+
+	.game-over {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		padding-top: 40px;
+
+		h2 {
+			display: inline-block;
+			background-image: url(~/img/canabaltpnotrim0.png);
+			background-position: -1644px -1916px;
+			width: 390px;
+			height: 50px;
+			font-size: 0;
+			zoom: 2;
+			image-rendering: pixelated;
+		}
+
+		h3 {
+			background: #35353d;
+			display: inline-block;
+			font-size: 30px;
+			font-weight: 400;
+			padding: 15px 0;
+			line-height: 1.35;
+
+			&:nth-child(2) {
+				width: 680px;
+				margin: 54px;
+			}
+
+			&:nth-child(3) {
+				width: 730px;
+				margin: 20px;
+			}
+		}
+	}
+
+	.paused {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,.35);
+		padding-top: 110px;
+
+		h2 {
+			display: inline-block;
+			background-image: url(~/img/canabaltpnotrim0.png);
+			background-position: -1158px -898px;
+			width: 259px;
+			height: 50px;
+			font-size: 0;
+			zoom: 2;
+			image-rendering: pixelated;
 		}
 	}
 }
