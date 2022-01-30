@@ -2006,6 +2006,7 @@ Main.prototype.startGame = function() {
 };
 
 Main.prototype.update = function(n) {
+	if (this._paused) return;
 	GameGlobal.TimeKeeper.update(n);
 	GameGlobal.ScreenQuake.update();
 	this.scroller.update();

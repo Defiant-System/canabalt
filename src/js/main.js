@@ -29,9 +29,25 @@ const canabalt = {
 			case "window.open":
 				break;
 			case "window.keystroke":
-				if (main.scroller) {
-					main.scroller.player.jumpPressed();
+
+				switch (event.char) {
+					case "space":
+						if (main.scroller) {
+							main.scroller.player.jumpPressed();
+						}
+						break;
+					case "m":
+						// toggle music
+						if (window.Howler._muted) window.Howler.unmute();
+						else window.Howler.mute(true);
+						break;
+					case "p":
+						// toggle pause
+						main._paused = !main._paused;
+						if (!main._paused) requestAnimationFrame(main.update.bind(main));
+						break;
 				}
+
 				break;
 			case "open-help":
 				defiant.shell("fs -u '~/help/index.md'");
@@ -42,10 +58,11 @@ const canabalt = {
 					// .addClass("paused");
 					.addClass("start-page");
 
-				// setTimeout(() => Self.dispatch({ type: "start-game" }), 300);
-				// setTimeout(() => {
-				// 	main.scroller.player.position.y = 500;
-				// }, 500);
+				setTimeout(() => Self.dispatch({ type: "start-game" }), 300);
+				setTimeout(() => {
+					// main.scroller.player.position.y = 500;
+					console.log( main.update );
+				}, 500);
 				break;
 			case "start-game":
 				Self.content.removeClass("start-page").addClass("playing");
