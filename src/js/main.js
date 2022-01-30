@@ -23,6 +23,9 @@ const canabalt = {
 		this.content = window.find("content");
 		// set width + height of canvas
 		window.find("canvas").attr(GAME);
+
+		// mute audio
+		window.Howler.mute(true);
 	},
 	dispatch(event) {
 		switch (event.type) {

@@ -1828,9 +1828,6 @@ Main.prototype.startGame = function() {
 	GameGlobal.PoolKeeper.createPools();
 	this.scroller = new PlayState(this.stage, this.width, this.height);
 	window.requestAnimationFrame(this.update.bind(this));
-
-	// mute audio
-	window.Howler.mute(true);
 };
 
 Main.prototype.update = function(n) {
