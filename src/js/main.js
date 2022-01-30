@@ -42,9 +42,12 @@ const canabalt = {
 						else window.Howler.mute(true);
 						break;
 					case "p":
-						// toggle pause
-						main._paused = !main._paused;
-						if (!main._paused) requestAnimationFrame(main.update.bind(main));
+						if (main.scroller) {
+							// toggle pause
+							main._paused = !main._paused;
+							if (!main._paused) requestAnimationFrame(main.update.bind(main));
+							Self.content.toggleClass("paused", !main._paused);
+						}
 						break;
 				}
 
@@ -58,11 +61,10 @@ const canabalt = {
 					// .addClass("paused");
 					.addClass("start-page");
 
-				setTimeout(() => Self.dispatch({ type: "start-game" }), 300);
-				setTimeout(() => {
-					// main.scroller.player.position.y = 500;
-					console.log( main.update );
-				}, 500);
+				// setTimeout(() => Self.dispatch({ type: "start-game" }), 300);
+				// setTimeout(() => {
+				// 	main.scroller.player.position.y = 500;
+				// }, 500);
 				break;
 			case "start-game":
 				Self.content.removeClass("start-page").addClass("playing");
