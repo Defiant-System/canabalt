@@ -29,11 +29,10 @@ const canabalt = {
 			case "window.open":
 				break;
 			case "window.keystroke":
-
 				switch (event.char) {
 					case "space":
 						if (main.scroller) {
-							main.scroller.player.jumpPressed();
+							main.scroller.player._jumpPressed = true;
 						}
 						break;
 					case "m":
@@ -50,7 +49,15 @@ const canabalt = {
 						}
 						break;
 				}
-
+				break;
+			case "window.keyup":
+				switch (event.char) {
+					case "space":
+						if (main.scroller) {
+							main.scroller.player._jumpPressed = false;
+						}
+						break;
+				}
 				break;
 			case "open-help":
 				defiant.shell("fs -u '~/help/index.md'");

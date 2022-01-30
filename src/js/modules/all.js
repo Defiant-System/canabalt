@@ -1791,7 +1791,6 @@ PlayerAsset.prototype.jumpPressed = function() {
 	if (game_over) {
 		return main.restart();
 	}
-	console.log(this.jump);
 	if (this.jump >= 0) {
 		if (this.jump === 0) {
 			var n = Util.random(4);
@@ -1801,9 +1800,9 @@ PlayerAsset.prototype.jumpPressed = function() {
 				case 2: GameGlobal.SoundPlayer.sound.play("jump3"); break;
 			}
 		}
-		this.jump += GameGlobal.TimeKeeper.elapsed * .001,
-		this.jump > this.jumpLimit && (this.jump = -1)
-	} else this.jump = -1
+		this.jump += GameGlobal.TimeKeeper.elapsed * .001;
+		this.jump > this.jumpLimit && (this.jump = -1);
+	} else this.jump = -1;
 },
 PlayerAsset.prototype.update = function() {
 	if (this.position.y > 484) {
@@ -2007,6 +2006,9 @@ Main.prototype.startGame = function() {
 
 Main.prototype.update = function(n) {
 	if (this._paused) return;
+	if (this.scroller.player._jumpPressed) {
+		this.scroller.player.jumpPressed();
+	}
 	GameGlobal.TimeKeeper.update(n);
 	GameGlobal.ScreenQuake.update();
 	this.scroller.update();

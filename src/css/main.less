@@ -27,7 +27,6 @@ content {
 	}
 
 	&.paused {
-		> canvas { filter: blur(5px); }
 		.paused { display: block; }
 	}
 
@@ -96,12 +95,13 @@ content {
 	.paused {
 		display: none;
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: rgba(0,0,0,.35);
-		padding-top: 190px;
+		top: 31px;
+		left: 31px;
+		right: 31px;
+		bottom: 31px;
+		background-color: rgba(0,0,0,.35);
+		backdrop-filter: blur(21px);
+		padding-top: 180px;
 
 		h2 {
 			display: inline-block;
