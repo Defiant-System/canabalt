@@ -1,7 +1,6 @@
 
 @import "modules/pixi.js"
 @import "modules/howler.js"
-@import "modules/kd.js"
 @import "modules/all.js"
 
 
