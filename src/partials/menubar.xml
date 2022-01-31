@@ -2,6 +2,10 @@
 	<Menu name="Canabalt">
 		<Menu name="About Canabalt" shell="win -a"/>
 		<Menu type="divider"/>
+		<Menu name="New Game"/>
+		<Menu name="Audio On" toggle_true="Audio Mute"/>
+		<Menu name="Play" toggle_true="Pause"/>
+		<Menu type="divider"/>
 		<Menu name="Quit Canabalt" shell="win -c"/>
 	</Menu>
 	<Menu name="Help">
