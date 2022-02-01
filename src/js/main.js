@@ -77,6 +77,9 @@ const canabalt = {
 
 				setTimeout(() => main.startGame(), 100);
 				break;
+			case "toggle-audio":
+				return "toggle_true";
+				// return "toggle_false";
 		}
 	}
 };
