@@ -18,7 +18,7 @@ const canabalt = {
 		window.find("canvas").attr(GAME);
 
 		// mute audio
-		window.Howler.mute(true);
+		// window.Howler.mute(true);
 	},
 	dispatch(event) {
 		let Self = canabalt,
@@ -32,19 +32,6 @@ const canabalt = {
 					case "space":
 						if (main.scroller) {
 							main.scroller.player._jumpPressed = true;
-						}
-						break;
-					case "m":
-						// toggle music
-						if (window.Howler._muted) window.Howler.unmute();
-						else window.Howler.mute(true);
-						break;
-					case "p":
-						if (main.scroller) {
-							// toggle pause
-							main._paused = !main._paused;
-							if (!main._paused) requestAnimationFrame(main.update.bind(main));
-							Self.content.toggleClass("paused", !main._paused);
 						}
 						break;
 				}
@@ -63,23 +50,30 @@ const canabalt = {
 				break;
 			// custom events
 			case "game-loaded":
-				Self.content.removeClass("loading")
-					// .addClass("paused");
-					.addClass("start-page");
-
-				// setTimeout(() => Self.dispatch({ type: "start-game" }), 300);
-				// setTimeout(() => {
-				// 	main.scroller.player.position.y = 500;
-				// }, 500);
+				Self.content.removeClass("loading").addClass("start-page");
 				break;
 			case "start-game":
 				Self.content.removeClass("start-page").addClass("playing");
 
 				setTimeout(() => main.startGame(), 100);
 				break;
-			case "toggle-audio":
+			case "toggle-pause":
+				if (game_over) {
+					main.restart()
+				} else if (main.scroller) {
+					// toggle pause
+					main._paused = !main._paused;
+					if (!main._paused) requestAnimationFrame(main.update.bind(main));
+					Self.content.toggleClass("paused", !main._paused);
+				} else {
+					Self.dispatch({ type: "start-game" });
+				}
 				return "toggle_true";
-				// return "toggle_false";
+			case "toggle-audio":
+				// toggle audio
+				if (window.Howler._muted) window.Howler.unmute();
+				else window.Howler.mute(true);
+				return "toggle_true";
 		}
 	}
 };

@@ -2,9 +2,9 @@
 	<Menu name="Canabalt">
 		<Menu name="About Canabalt" shell="win -a"/>
 		<Menu type="divider"/>
-		<Menu name="New Game"/>
-		<Menu name="Audio On" toggle_true="Audio Mute" click="toggle-audio"/>
-		<Menu name="Play" toggle_true="Pause" />
+		<Menu name="New Game" click="start-game"/>
+		<Menu name="Mute Audio" toggle_true="Audio On" click="toggle-audio" hotkey="alt+m"/>
+		<Menu name="Play" toggle_true="Pause" click="toggle-pause" hotkey="alt+p"/>
 		<Menu type="divider"/>
 		<Menu name="Quit Canabalt" shell="win -c"/>
 	</Menu>
