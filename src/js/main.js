@@ -25,8 +25,6 @@ const canabalt = {
 			el;
 		switch (event.type) {
 			// system events
-			case "window.open":
-				break;
 			case "window.keystroke":
 				switch (event.char) {
 					case "space":
