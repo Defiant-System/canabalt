@@ -44,7 +44,7 @@ const canabalt = {
 				}
 				break;
 			case "open-help":
-				defiant.shell("fs -u '~/help/index.md'");
+				karaqu.shell("fs -u '~/help/index.md'");
 				break;
 			// custom events
 			case "game-loaded":
