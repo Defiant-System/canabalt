@@ -3,6 +3,8 @@
 @import "modules/howler.js"
 @import "modules/all.js"
 
+@import "./modules/test.js";
+
 
 let GAME = {
 		width: window.innerWidth,
@@ -19,12 +21,19 @@ const canabalt = {
 
 		// mute audio
 		// window.Howler.mute(true);
+
+		// DEV-ONLY-START
+		Test.init();
+		// DEV-ONLY-END
 	},
 	dispatch(event) {
 		let Self = canabalt,
 			el;
 		switch (event.type) {
 			// system events
+			case "window.close":
+				main.quitGame();
+				break;
 			case "window.keystroke":
 				switch (event.char) {
 					case "space":

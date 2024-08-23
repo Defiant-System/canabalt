@@ -1972,6 +1972,10 @@ var Util = {
 game_over;
 
 
+Main.prototype.quitGame = function() {
+	this._paused = true;
+};
+
 Main.prototype.loadSounds = function() {
 	GameGlobal.SoundPlayer.onComplete = this.soundsLoaded.bind(this);
 	GameGlobal.SoundPlayer.load();
